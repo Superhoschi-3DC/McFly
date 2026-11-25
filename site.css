@@ -1,14 +1,14 @@
 :root {
   color-scheme: dark;
-  --bg: #07080a;
-  --card: #101216;
+  --bg: #0b1f3a;
+  --card: #123056;
   --ink: #f3f5f7;
-  --muted: #9aa3ad;
-  --faint: #6f7882;
-  --line: rgba(255, 255, 255, 0.1);
-  --ghost: rgba(255, 255, 255, 0.14);
-  --accent: #3ef2ff;
-  --accent-ink: #041316;
+  --muted: #c5ced6;
+  --faint: #9eacba;
+  --line: rgba(255, 255, 255, 0.12);
+  --ghost: rgba(255, 255, 255, 0.18);
+  --accent: #f97316;
+  --accent-ink: #0b1f3a;
   --placeholder-bg: rgba(255, 186, 84, 0.08);
   --placeholder-ink: #e6c48a;
   --placeholder-line: rgba(230, 196, 138, 0.45);
@@ -30,7 +30,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(880px 380px at 78% -8%, rgba(62, 242, 255, 0.07), transparent 62%),
+    radial-gradient(880px 380px at 78% -8%, rgba(249, 115, 22, 0.16), transparent 62%),
     var(--bg);
   color: var(--ink);
   font-family: var(--sans);
@@ -50,7 +50,7 @@ a {
   top: -4rem;
   padding: 0.5rem 0.85rem;
   border-radius: 999px;
-  background: #16181d;
+  background: #123056;
   color: var(--ink);
   z-index: 2;
 }
@@ -65,7 +65,7 @@ a {
 }
 
 ::selection {
-  background: rgba(62, 242, 255, 0.28);
+  background: rgba(249, 115, 22, 0.35);
   color: var(--ink);
 }
 
@@ -141,9 +141,43 @@ a {
 
 .card {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1px solid var(--accent);
   border-radius: 1.35rem;
   padding: 2.35rem 2.2rem 2.2rem;
+}
+
+.entries {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.entry {
+  display: block;
+  padding: 0.95rem 1.05rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.95rem;
+  background: rgba(11, 31, 58, 0.55);
+}
+
+.entry:hover {
+  background: rgba(249, 115, 22, 0.14);
+}
+
+.entry-title {
+  display: block;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.entry-note {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
 .eyebrow {
@@ -205,7 +239,7 @@ p {
 }
 
 .prompt-block {
-  background: #0b0d11;
+  background: #0b1f3a;
   border: 1px solid var(--line);
   border-radius: 0.9rem;
   padding: 0.95rem 1rem 0.8rem;
@@ -242,16 +276,25 @@ button {
 .filter button {
   min-height: 44px;
   padding: 0.4rem 0.95rem;
-  border: 1px solid var(--ghost);
+  border: 1px solid var(--accent);
   border-radius: 999px;
   background: transparent;
-  color: #e6e9ee;
+  color: var(--ink);
+}
+
+.copy {
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
 }
 
 .copy:hover,
 .filter button:hover {
-  border-color: rgba(255, 255, 255, 0.34);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(249, 115, 22, 0.16);
+}
+
+.copy:hover {
+  background: #ff851f;
 }
 
 .copy:active,
