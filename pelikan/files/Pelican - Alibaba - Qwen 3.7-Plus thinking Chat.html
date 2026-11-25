@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelican Riding a Bicycle</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #2c3e50;
+            font-family: sans-serif;
+        }
+
+        svg {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 12px;
+        }
+
+        /* Animations */
+        .wheel {
+            animation: spin 1s linear infinite;
+        }
+        .wheel-rear { transform-origin: 250px 450px; }
+        .wheel-front { transform-origin: 550px 450px; }
+
+        .pedals {
+            animation: spin 1s linear infinite;
+            transform-origin: 400px 450px;
+        }
+
+        .pelican {
+            animation: bob 0.5s ease-in-out infinite;
+        }
+
+        .scarf {
+            animation: flap 0.25s ease-in-out infinite alternate;
+            transform-origin: 430px 170px;
+        }
+
+        .clouds {
+            animation: moveClouds 15s linear infinite;
+        }
+
+        .road-lines {
+            animation: moveRoad 0.4s linear infinite;
+        }
+
+        .hill {
+            animation: moveHills 4s linear infinite;
+        }
+
+        /* Keyframes */
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes bob {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes flap {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(20deg); }
+        }
+
+        @keyframes moveClouds {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-800px); }
+        }
+
+        @keyframes moveRoad {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-200px); }
+        }
+
+        @keyframes moveHills {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-400px); }
+        }
+    </style>
+</head>
+<body>
+
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Sky Gradient -->
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4facfe"/>
+            <stop offset="100%" stop-color="#00f2fe"/>
+        </linearGradient>
+        
+        <!-- Cloud Template -->
+        <g id="cloud">
+            <path d="M 50 50 Q 70 20 100 40 Q 130 20 160 50 Q 180 80 140 80 L 60 80 Q 20 70 50 50 Z" fill="#ffffff" opacity="0.9"/>
+        </g>
+    </defs>
+
+    <!-- Background Sky -->
+    <rect width="100%" height="100%" fill="url(#skyGrad)"/>
+
+    <!-- Sun -->
+    <circle cx="680" cy="120" r="45" fill="#FFD700" opacity="0.8"/>
+    <circle cx="680" cy="120" r="60" fill="#FFD700" opacity="0.3"/>
+
+    <!-- Moving Clouds -->
+    <g class="clouds">
+        <use href="#cloud" x="50" y="80" transform="scale(0.8)"/>
+        <use href="#cloud" x="350" y="40" transform="scale(1.2)"/>
+        <use href="#cloud" x="600" y="100" transform="scale(0.9)"/>
+        <!-- Duplicates for seamless looping -->
+        <use href="#cloud" x="850" y="80" transform="scale(0.8)"/>
+        <use href="#cloud" x="1150" y="40" transform="scale(1.2)"/>
+        <use href="#cloud" x="1400" y="100" transform="scale(0.9)"/>
+    </g>
+
+    <!-- Moving Hills (Background) -->
+    <g class="hill">
+        <path d="M 0 480 Q 100 400 200 480 T 400 480 T 600 480 T 800 480 T 1000 480 T 1200 480 L 1200 600 L 0 600 Z" fill="#2ecc71" opacity="0.6"/>
+    </g>
+    <g class="hill" style="animation-duration: 6s; animation-direction: reverse;">
+        <path d="M 0 500 Q 150 430 300 500 T 600 500 T 900 500 T 1200 500 L 1200 600 L 0 600 Z" fill="#27ae60" opacity="0.8"/>
+    </g>
+
+    <!-- Road -->
+    <rect x="0" y="520" width="100%" height="80" fill="#34495e"/>
+    <rect x="0" y="520" width="100%" height="5" fill="#2c3e50"/>
+    
+    <!-- Moving Road Lines -->
+    <g class="road-lines">
+        <line x1="0" y1="560" x2="80" y2="560" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+        <line x1="200" y1="560" x2="280" y2="560" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+        <line x1="400" y1="560" x2="480" y2="560" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+        <line x1="600" y1="560" x2="680" y2="560" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+        <line x1="800" y1="560" x2="880" y2="560" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+        <line x1="1000" y1="560" x2="1080" y2="560" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+    </g>
+
+    <!-- BICYCLE -->
+    <g id="bicycle">
+        <!-- Rear Wheel -->
+        <g class="wheel wheel-rear">
+            <circle cx="250" cy="450" r="70" fill="none" stroke="#2c3e50" stroke-width="10"/>
+            <circle cx="250" cy="450" r="60" fill="none" stroke="#bdc3c7" stroke-width="2"/>
+            <!-- Spokes -->
+            <line x1="250" y1="380" x2="250" y2="520" stroke="#7f8c8d" stroke-width="3"/>
+            <line x1="180" y1="450" x2="320" y2="450" stroke="#7f8c8d" stroke-width="3"/>
+            <line x1="200" y1="400" x2="300" y2="500" stroke="#7f8c8d" stroke-width="3"/>
+            <line x1="200" y1="500" x2="300" y2="400" stroke="#7f8c8d" stroke-width="3"/>
+            <circle cx="250" cy="450" r="8" fill="#34495e"/>
+        </g>
+
+        <!-- Front Wheel -->
+        <g class="wheel wheel-front">
+            <circle cx="550" cy="450" r="70" fill="none" stroke="#2c3e50" stroke-width="10"/>
+            <circle cx="550" cy="450" r="60" fill="none" stroke="#bdc3c7" stroke-width="2"/>
+            <!-- Spokes -->
+            <line x1="550" y1="380" x2="550" y2="520" stroke="#7f8c8d" stroke-width="3"/>
+            <line x1="480" y1="450" x2="620" y2="450" stroke="#7f8c8d" stroke-width="3"/>
+            <line x1="500" y1="400" x2="600" y2="500" stroke="#7f8c8d" stroke-width="3"/>
+            <line x1="500" y1="500" x2="600" y2="400" stroke="#7f8c8d" stroke-width="3"/>
+            <circle cx="550" cy="450" r="8" fill="#34495e"/>
+        </g>
+
+        <!-- Frame -->
+        <path d="M 250 450 L 400 450 L 350 300 Z M 400 450 L 500 320 L 350 300 M 500 320 L 550 450" 
+              fill="none" stroke="#e74c3c" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+        
+        <!-- Seat -->
+        <path d="M 330 300 L 370 300 L 360 285 L 340 285 Z" fill="#2c3e50"/>
+        <line x1="350" y1="300" x2="350" y2="320" stroke="#bdc3c7" stroke-width="6"/>
+
+        <!-- Handlebars -->
+        <path d="M 500 320 L 490 270 L 530 260" fill="none" stroke="#bdc3c7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Bell -->
+        <circle cx="515" cy="255" r="10" fill="#f1c40f"/>
+        <circle cx="515" cy="255" r="4" fill="#f39c12"/>
+
+        <!-- Pedals & Crank (Rotating) -->
+        <g class="pedals">
+            <!-- Crank Arms -->
+            <line x1="400" y1="450" x2="400" y2="495" stroke="#34495e" stroke-width="8" stroke-linecap="round"/>
+            <line x1="400" y1="450" x2="400" y2="405" stroke="#34495e" stroke-width="8" stroke-linecap="round"/>
+            <!-- Pedals -->
+            <rect x="385" y="490" width="30" height="10" fill="#2c3e50" rx="4"/>
+            <rect x="385" y="395" width="30" height="10" fill="#2c3e50" rx="4"/>
+            <!-- Chainring -->
+            <circle cx="400" cy="450" r="20" fill="none" stroke="#7f8c8d" stroke-width="4"/>
+            <circle cx="400" cy="450" r="6" fill="#2c3e50"/>
+        </g>
+    </g>
+
+    <!-- PELICAN -->
+    <g class="pelican">
+        <!-- Legs (Simplified, moving with bob) -->
+        <path d="M 370 310 L 390 400 L 400 410" fill="none" stroke="#f39c12" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 350 310 L 370 400 L 380 410" fill="none" stroke="#f39c12" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Tail Feathers -->
+        <path d="M 300 270 L 240 240 L 260 290 Z" fill="#ffffff" stroke="#bdc3c7" stroke-width="3" stroke-linejoin="round"/>
+
+        <!-- Body -->
+        <ellipse cx="360" cy="260" rx="70" ry="50" fill="#ffffff" stroke="#bdc3c7" stroke-width="3"/>
+
+        <!-- Neck -->
+        <path d="M 400 240 Q 450 180 460 130" fill="none" stroke="#ffffff" stroke-width="35" stroke-linecap="round"/>
+        <path d="M 400 240 Q 450 180 460 130" fill="none" stroke="#bdc3c7" stroke-width="35" stroke-linecap="round" stroke-dasharray="0 100 1000" opacity="0.3"/>
+
+        <!-- Head -->
+        <circle cx="465" cy="115" r="28" fill="#ffffff" stroke="#bdc3c7" stroke-width="3"/>
+
+        <!-- Eye -->
+        <circle cx="475" cy="108" r="5" fill="#2c3e50"/>
+        <circle cx="477" cy="106" r="2" fill="#ffffff"/> <!-- Eye glint -->
+
+        <!-- Beak (Upper) -->
+        <path d="M 485 115 L 590 125 L 485 135 Z" fill="#f39c12" stroke="#e67e22" stroke-width="2" stroke-linejoin="round"/>
+        
+        <!-- Beak (Pouch) -->
+        <path d="M 485 135 Q 530 190 580 130 Z" fill="#f1c40f" stroke="#f39c12" stroke-width="2" stroke-linejoin="round"/>
+
+        <!-- Wing / Arm holding handlebar -->
+        <path d="M 380 250 Q 440 270 510 265" fill="none" stroke="#ecf0f1" stroke-width="16" stroke-linecap="round"/>
+        <path d="M 380 250 Q 440 270 510 265" fill="none" stroke="#bdc3c7" stroke-width="16" stroke-linecap="round" stroke-dasharray="0 50 1000" opacity="0.4"/>
+
+        <!-- Scarf (Flapping in the wind) -->
+        <g class="scarf">
+            <path d="M 440 160 Q 380 170 310 140" fill="none" stroke="#e74c3c" stroke-width="14" stroke-linecap="round"/>
+            <path d="M 440 160 Q 380 170 310 140" fill="none" stroke="#c0392b" stroke-width="14" stroke-linecap="round" stroke-dasharray="10 20" opacity="0.5"/>
+        </g>
+    </g>
+
+</svg>
+
+</body>
+</html>

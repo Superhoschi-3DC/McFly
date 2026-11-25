@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelican Cyclist</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+            max-width: 800px;
+            max-height: 600px;
+        }
+    </style>
+</head>
+<body>
+
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Gradient for the bicycle frame -->
+        <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#d32f2f;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ff0000;stop-opacity:1" />
+        </linearGradient>
+        <!-- Gradient for the pelican -->
+        <linearGradient id="birdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <!-- Background Road -->
+    <rect x="0" y="260" width="500" height="40" fill="#888" />
+    <rect x="0" y="250" width="500" height="10" fill="#aaa" />
+
+    <!-- The Shadow -->
+    <ellipse cx="250" cy="285" rx="120" ry="10" fill="black" opacity="0.2">
+        <animate attributeName="rx" values="120;100;120" dur="0.4s" repeatCount="indefinite" />
+        <animate attributeName="ry" values="10;5;10" dur="0.4s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Group containing the whole moving vehicle -->
+    <g id="cyclist-group">
+        
+        <!-- Back Wheel -->
+        <g id="back-wheel">
+            <circle cx="100" cy="260" r="30" fill="none" stroke="#333" stroke-width="4">
+                <animateTransform attributeName="transform" type="rotate" values="0 100 260;360 100 260" dur="0.4s" repeatCount="indefinite" />
+            </circle>
+            <!-- Spokes -->
+            <path d="M100 230 L100 290 M70 260 L130 260" stroke="#333" stroke-width="2">
+                 <animateTransform attributeName="transform" type="rotate" values="0 100 260;360 100 260" dur="0.4s" repeatCount="indefinite" />
+            </path>
+        </g>
+
+        <!-- Front Wheel -->
+        <g id="front-wheel">
+            <circle cx="250" cy="260" r="30" fill="none" stroke="#333" stroke-width="4">
+                 <animateTransform attributeName="transform" type="rotate" values="0 250 260;360 250 260" dur="0.4s" repeatCount="indefinite" />
+            </circle>
+            <!-- Spokes -->
+            <path d="M250 230 L250 290 M220 260 L280 260" stroke="#333" stroke-width="2">
+                 <animateTransform attributeName="transform" type="rotate" values="0 250 260;360 250 260" dur="0.4s" repeatCount="indefinite" />
+            </path>
+        </g>
+
+        <!-- Bicycle Frame -->
+        <g id="frame">
+            <!-- Top Tube -->
+            <line x1="100" y1="245" x2="250" y2="250" stroke="url(#frameGrad)" stroke-width="6" stroke-linecap="round" />
+            <!-- Down Tube / Seat Post -->
+            <path d="M 100 245 L 130 260 L 210 245" fill="none" stroke="url(#frameGrad)" stroke-width="8" stroke-linecap="round" />
+            <!-- Fork -->
+            <line x1="250" y1="250" x2="250" y2="264" stroke="#333" stroke-width="6" stroke-linecap="round" />
+            
+            <!-- Pedals & Crank -->
+            <g id="crank">
+                <circle cx="210" cy="245" r="5" fill="#333" />
+                <!-- Crank arm -->
+                <line x1="210" y1="245" x2="210" y2="225" stroke="#333" stroke-width="4" stroke-linecap="round">
+                    <animateTransform attributeName="transform" type="rotate" values="0 210 245;360 210 245" dur="0.4s" repeatCount="indefinite" />
+                </line>
+                <!-- Pedal -->
+                <rect x="206" y="221" width="8" height="12" fill="#555" transform="rotate(-45, 210, 225)">
+                    <animateTransform attributeName="transform" type="rotate" values="-45 210 225;315 210 225" dur="0.4s" repeatCount="indefinite" />
+                </rect>
+            </g>
+        </g>
+
+        <!-- The Pelican -->
+        <g id="pelican" transform="translate(180, 210)">
+            <!-- Legs -->
+            <g id="legs">
+                <line x1="10" y1="45" x2="5" y2="20" stroke="#f5a97b" stroke-width="3" stroke-linecap="round" />
+                <line x1="15" y1="45" x2="20" y2="25" stroke="#f5a97b" stroke-width="3" stroke-linecap="round" />
+            </g>
+            
+            <!-- Body -->
+            <ellipse cx="15" cy="40" rx="12" ry="8" fill="url(#birdGrad)" stroke="#ccc" stroke-width="1" />
+            
+            <!-- Wing -->
+            <ellipse cx="22" cy="40" rx="6" ry="5" fill="#fff" stroke="#ccc" stroke-width="1" transform="rotate(20, 22, 40)">
+                 <animateTransform attributeName="transform" type="rotate" values="20 22 40;-20 22 40;20 22 40" dur="0.8s" repeatCount="indefinite" />
+            </ellipse>
+
+            <!-- Head -->
+            <circle cx="5" cy="30" r="6" fill="url(#birdGrad)" stroke="#ccc" stroke-width="1" />
+            
+            <!-- The Beak (Large and distinctive) -->
+            <path d="M -1 30 Q 15 25 25 35 Q 15 45 -1 40 Z" fill="#f4a261" stroke="#e65100" stroke-width="1" />
+            
+            <!-- Eye -->
+            <circle cx="8" cy="29" r="1" fill="black" />
+        </g>
+
+        <!-- Animation for the Pelican (Bobbing up and down) -->
+        <animateTransform attributeName="transform" 
+                          type="translate" 
+                          values="0,0; 0,-5; 0,0" 
+                          additive="sum" 
+                          dur="0.4s" 
+                          repeatCount="indefinite" 
+                          begin="0s" />
+
+        <!-- Animation for the Pelican's Legs (Pedaling motion simulation) -->
+        <g id="leg-animation">
+             <animateTransform attributeName="transform" 
+                               type="rotate" 
+                               values="15 20 50; -15 20 50; 15 20 50" 
+                               dur="0.4s" 
+                               repeatCount="indefinite" />
+        </g>
+    </g>
+</svg>
+
+</body>
+</html>

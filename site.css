@@ -590,3 +590,318 @@ th {
     background: #fff;
   }
 }
+
+body.pelikan-page {
+  overflow-x: clip;
+}
+
+body.pelikan-page .shell {
+  grid-template-columns: max-content minmax(0, 1fr);
+  width: min(100rem, calc(100% - 2.25rem));
+  align-items: start;
+}
+
+body.pelikan-page .card {
+  width: 100%;
+}
+
+body.pelikan-page .pelikan-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 0.9rem;
+  margin: 0.35rem 0 0.15rem;
+  padding: 0.95rem 1rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+body.pelikan-page .pelikan-toolbar label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 11rem;
+  flex: 1 1 12rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+body.pelikan-page .pelikan-toolbar select {
+  width: 100%;
+  min-width: 0;
+  background: var(--card-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+  font-weight: 500;
+}
+
+body.pelikan-page .pelikan-toolbar select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+body.pelikan-page .pelikan-board {
+  min-width: 0;
+}
+
+body.pelikan-page .pelikan-vendor-section {
+  margin: 1.15rem 0 0;
+}
+
+body.pelikan-page h2.pelikan-vendor-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+body.pelikan-page .pelikan-vendor-break {
+  display: block;
+  width: 2.4rem;
+  height: 3px;
+  margin: 0 0 0.85rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+body.pelikan-page .pelikan-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: stretch;
+  width: 100%;
+}
+
+body.pelikan-page .pelikan-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 18rem;
+  max-width: 26rem;
+  min-width: 16rem;
+  margin: 0;
+  padding: 0.85rem 0.85rem 0.9rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  box-shadow: 0 10px 28px rgba(5, 16, 36, 0.2);
+}
+
+body.pelikan-page .pelikan-item-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.55rem;
+}
+
+body.pelikan-page .pelikan-item-titles {
+  flex: 1;
+  min-width: 0;
+}
+
+body.pelikan-page .pelikan-item-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+body.pelikan-page h3.pelikan-item-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+body.pelikan-page .pelikan-item-release {
+  flex: 0 0 auto;
+  color: var(--faint);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+body.pelikan-page .pelikan-item-params {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+body.pelikan-page .pelikan-fullscreen,
+body.pelikan-page .pelikan-fs-close {
+  appearance: none;
+  flex-shrink: 0;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+}
+
+body.pelikan-page .pelikan-fullscreen:hover,
+body.pelikan-page .pelikan-fs-close:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+body.pelikan-page .pelikan-preview-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  min-height: 11rem;
+  margin-top: auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--card-2);
+  cursor: pointer;
+}
+
+body.pelikan-page .pelikan-preview-wrap:hover,
+body.pelikan-page .pelikan-preview-wrap:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+}
+
+body.pelikan-page .pelikan-thumb {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+  background: var(--card-2);
+  transition: opacity 0.2s ease;
+}
+
+body.pelikan-page .pelikan-thumb.is-replaced {
+  opacity: 0;
+}
+
+body.pelikan-page .pelikan-live {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+body.pelikan-page .pelikan-live.is-ready {
+  opacity: 1;
+}
+
+body.pelikan-page .pelikan-live-slot {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+body.pelikan-page #pelikan-preload-host {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 420px;
+  height: 280px;
+  overflow: hidden;
+  visibility: hidden;
+  clip-path: inset(50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+body.pelikan-page .pelikan-item.hidden,
+body.pelikan-page .pelikan-vendor-section.hidden {
+  display: none;
+}
+
+body.pelikan-fs-open {
+  overflow: hidden;
+}
+
+body.pelikan-page .pelikan-fs {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  flex-direction: column;
+  background: #071526;
+  padding:
+    env(safe-area-inset-top)
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+body.pelikan-page .pelikan-fs.is-hidden {
+  display: none;
+}
+
+body.pelikan-page .pelikan-fs-bar {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 0.7rem 0.8rem 0.45rem;
+}
+
+body.pelikan-page .pelikan-fs-close {
+  min-width: 3rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  font-size: 1rem;
+}
+
+body.pelikan-page .pelikan-fs-frame {
+  flex: 1 1 auto;
+  width: 100%;
+  border: 0;
+  background: #071526;
+}
+
+@media (max-width: 52rem) {
+  body.pelikan-page .shell {
+    width: min(42rem, calc(100% - 1.75rem));
+  }
+
+  body.pelikan-page .card {
+    width: 100%;
+  }
+
+  body.pelikan-page .pelikan-toolbar label {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
+  body.pelikan-page .pelikan-item {
+    flex-basis: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+}

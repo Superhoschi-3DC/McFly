@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pelican Riding a Bicycle</title>
+<style>
+  html,body{margin:0;height:100%;background:linear-gradient(#8fd3ff,#e6f6ff 60%,#9ccf6a 60%,#7bb24c);overflow:hidden;font-family:sans-serif}
+  svg{width:100%;height:100%;display:block}
+  .wheel{animation:spin 1s linear infinite}
+  .crank{animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .rider{animation:bob .5s ease-in-out infinite alternate}
+  @keyframes bob{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+  .clouds{animation:drift 30s linear infinite}
+  @keyframes drift{from{transform:translateX(900px)}to{transform:translateX(-400px)}}
+  .ground{animation:scroll 1.2s linear infinite}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-80px)}}
+  .wing{transform-origin:330px 250px;animation:flap .5s ease-in-out infinite alternate}
+  @keyframes flap{from{transform:rotate(-4deg)}to{transform:rotate(6deg)}}
+  .pouch{transform-origin:400px 205px;animation:wobble .5s ease-in-out infinite alternate}
+  @keyframes wobble{from{transform:scaleY(1)}to{transform:scaleY(1.08)}}
+  .eye{animation:blink 4s infinite}
+  @keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+</style>
+</head>
+<body>
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="wheelG">
+      <circle r="62" fill="none" stroke="#222" stroke-width="10"/>
+      <circle r="55" fill="none" stroke="#777" stroke-width="2"/>
+      <g stroke="#aaa" stroke-width="2">
+        <line x1="-55" y1="0" x2="55" y2="0"/>
+        <line x1="0" y1="-55" x2="0" y2="55"/>
+        <line x1="-39" y1="-39" x2="39" y2="39"/>
+        <line x1="-39" y1="39" x2="39" y2="-39"/>
+        <line x1="-21" y1="-51" x2="21" y2="51"/>
+        <line x1="-51" y1="-21" x2="51" y2="21"/>
+        <line x1="-21" y1="51" x2="21" y2="-51"/>
+        <line x1="-51" y1="21" x2="51" y2="-21"/>
+      </g>
+      <circle r="6" fill="#444"/>
+    </g>
+  </defs>
+
+  <!-- sun -->
+  <circle cx="680" cy="80" r="40" fill="#ffd94a"/>
+
+  <!-- clouds -->
+  <g class="clouds" fill="#fff" opacity=".9">
+    <ellipse cx="100" cy="90" rx="50" ry="20"/><ellipse cx="135" cy="78" rx="35" ry="22"/>
+    <ellipse cx="400" cy="60" rx="60" ry="18"/><ellipse cx="430" cy="50" rx="30" ry="18"/>
+  </g>
+
+  <!-- road -->
+  <rect x="0" y="420" width="800" height="80" fill="#555"/>
+  <g class="ground">
+    <g fill="#fff">
+      <rect x="0" y="455" width="40" height="6"/><rect x="80" y="455" width="40" height="6"/>
+      <rect x="160" y="455" width="40" height="6"/><rect x="240" y="455" width="40" height="6"/>
+      <rect x="320" y="455" width="40" height="6"/><rect x="400" y="455" width="40" height="6"/>
+      <rect x="480" y="455" width="40" height="6"/><rect x="560" y="455" width="40" height="6"/>
+      <rect x="640" y="455" width="40" height="6"/><rect x="720" y="455" width="40" height="6"/>
+      <rect x="800" y="455" width="40" height="6"/>
+    </g>
+  </g>
+
+  <!-- bicycle -->
+  <g id="bike">
+    <g transform="translate(250,358)"><g class="wheel"><use href="#wheelG"/></g></g>
+    <g transform="translate(500,358)"><g class="wheel"><use href="#wheelG"/></g></g>
+    <g stroke="#d6312b" stroke-width="8" stroke-linecap="round" fill="none">
+      <line x1="250" y1="358" x2="360" y2="358"/>
+      <line x1="250" y1="358" x2="325" y2="270"/>
+      <line x1="325" y1="270" x2="360" y2="358"/>
+      <line x1="325" y1="270" x2="465" y2="270"/>
+      <line x1="360" y1="358" x2="465" y2="270"/>
+      <line x1="500" y1="358" x2="470" y2="240"/>
+    </g>
+    <!-- handlebar -->
+    <path d="M470 240 L462 225 Q480 218 495 228" stroke="#333" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <!-- seat post + seat -->
+    <line x1="325" y1="270" x2="318" y2="250" stroke="#333" stroke-width="6"/>
+    <path d="M295 248 Q320 240 340 250 L295 254 Z" fill="#222"/>
+    <!-- crank -->
+    <g transform="translate(360,358)">
+      <circle r="14" fill="#333"/>
+      <g class="crank">
+        <line x1="0" y1="0" x2="0" y2="-28" stroke="#888" stroke-width="5"/>
+        <line x1="0" y1="0" x2="0" y2="28" stroke="#888" stroke-width="5"/>
+        <rect x="-10" y="-32" width="20" height="6" fill="#222"/>
+        <rect x="-10" y="26" width="20" height="6" fill="#222"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- pelican -->
+  <g class="rider">
+    <!-- legs (animated to follow pedal) -->
+    <g stroke="#f29a2e" stroke-width="6" stroke-linecap="round" fill="none">
+      <polyline>
+        <animate attributeName="points" dur="1s" repeatCount="indefinite"
+          values="320,250 350,300 360,330; 320,250 375,320 388,358; 320,250 350,345 360,386; 320,250 335,320 332,358; 320,250 350,300 360,330"/>
+      </polyline>
+      <polyline opacity=".7">
+        <animate attributeName="points" dur="1s" repeatCount="indefinite"
+          values="320,250 350,345 360,386; 320,250 335,320 332,358; 320,250 350,300 360,330; 320,250 375,320 388,358; 320,250 350,345 360,386"/>
+      </polyline>
+    </g>
+    <!-- tail -->
+    <path d="M270 230 L240 215 L250 240 Z" fill="#e8e8e8" stroke="#bbb"/>
+    <!-- body -->
+    <ellipse cx="320" cy="225" rx="58" ry="40" fill="#fafafa" stroke="#ccc" stroke-width="2"/>
+    <!-- wing -->
+    <g class="wing">
+      <path d="M290 215 Q340 195 400 230 Q350 250 300 245 Z" fill="#ddd" stroke="#aaa" stroke-width="2"/>
+      <path d="M380 228 Q420 232 465 232" stroke="#ddd" stroke-width="10" stroke-linecap="round" fill="none"/>
+      <path d="M330 222 L380 230 M320 232 L370 238" stroke="#999" stroke-width="2"/>
+    </g>
+    <!-- neck -->
+    <path d="M350 205 Q380 170 370 130 Q368 110 385 105" stroke="#fafafa" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <!-- head -->
+    <circle cx="390" cy="110" r="22" fill="#fafafa" stroke="#ccc" stroke-width="2"/>
+    <path d="M378 90 Q385 78 398 86" stroke="#f5d76e" stroke-width="4" fill="none"/>
+    <!-- eye -->
+    <g transform="translate(396,105)"><g class="eye"><circle r="4" fill="#222"/><circle cx="1.5" cy="-1.5" r="1.2" fill="#fff"/></g></g>
+    <!-- beak + pouch -->
+    <path d="M405 108 L495 120 L408 118 Z" fill="#f5a623" stroke="#c77c0e" stroke-width="2"/>
+    <g class="pouch">
+      <path d="M408 118 Q440 160 492 121 Z" fill="#f7c35a" stroke="#c77c0e" stroke-width="2"/>
+    </g>
+    <circle cx="492" cy="121" r="3" fill="#c77c0e"/>
+  </g>
+
+  <text x="400" y="490" text-anchor="middle" fill="#ddd" font-size="14">Pelican on a bicycle</text>
+</svg>
+</body>
+</html>

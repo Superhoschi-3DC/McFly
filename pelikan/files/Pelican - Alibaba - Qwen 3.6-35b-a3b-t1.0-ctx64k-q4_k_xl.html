@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Pelican Cyclist</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #87CEEB, #E0F7FA); /* Sky */
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        /* Sun decoration */
+        .sun {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 40px #FFD700;
+        }
+
+        /* Main container for the bike */
+        .scene {
+            width: 600px;
+            height: 400px;
+            position: relative;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* --- Animations --- */
+
+        /* 1. The main body bounces up and down */
+        .pelican-body {
+            animation: bob 0.6s infinite ease-in-out alternate;
+            transform-origin: center;
+        }
+
+        /* 2. The wheels rotate */
+        .wheel {
+            transform-origin: 0px; /* Center of the wheel coordinate */
+            animation: spin 1s linear infinite;
+        }
+
+        /* 3. The legs pedal (simplified) */
+        .leg {
+            stroke-linecap: round;
+            animation: pedal-leg 1s linear infinite;
+        }
+        
+        .leg-left {
+            transform-origin: 0px 0px;
+            animation: pedal-rotate-left 1s linear infinite;
+        }
+
+        .leg-right {
+            transform-origin: 0px 0px;
+            animation: pedal-rotate-right 1s linear infinite;
+        }
+
+        /* 4. The wind/crown feathers move */
+        .feathers {
+            transform-origin: center bottom;
+            animation: flap-wind 0.3s infinite alternate;
+        }
+
+        /* 5. The background clouds move */
+        .cloud {
+            animation: move-clouds 10s linear infinite;
+        }
+
+        /* --- Keyframes --- */
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes bob {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-4px); }
+        }
+
+        @keyframes flap-wind {
+            0% { transform: skewX(0deg); }
+            100% { transform: skewX(-10deg); }
+        }
+
+        @keyframes pedal-rotate-left {
+            0% { transform: rotate(0deg) translateY(20px); }
+            100% { transform: rotate(360deg) translateY(20px); }
+        }
+
+        @keyframes pedal-rotate-right {
+            0% { transform: rotate(180deg) translateY(20px); }
+            100% { transform: rotate(540deg) translateY(20px); }
+        }
+
+        @keyframes move-clouds {
+            0% { transform: translateX(600px); }
+            100% { transform: translateX(-200px); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="sun"></div>
+
+    <div class="scene">
+        <!-- Clouds in background -->
+        <svg class="cloud" style="position:absolute; top: 50px;" width="200" height="60" viewBox="0 0 200 60">
+            <path d="M30,40 Q50,10 80,40 Q100,0 130,40 Q170,40 170,70 L30,70 Z" fill="white" opacity="0.8"/>
+        </svg>
+        <svg class="cloud" style="position:absolute; top: 80px; animation-duration: 15s;" width="150" height="40" viewBox="0 0 150 40">
+             <path d="M20,30 Q40,10 60,30 Q80,0 100,30 Q130,30 130,50 L20,50 Z" fill="white" opacity="0.6"/>
+        </svg>
+
+        <svg viewBox="0 0 600 400">
+            <defs>
+                <style>
+                    .tire { stroke: #333; stroke-width: 8; fill: none; }
+                    .rim { stroke: #ddd; stroke-width: 2; fill: none; }
+                    .spoke { stroke: #ccc; stroke-width: 1; }
+                    .frame { stroke: #D32F2F; stroke-width: 8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                    .seat { fill: #333; }
+                    .handlebar { stroke: #333; stroke-width: 6; fill: none; stroke-linecap: round; }
+                    .beak { fill: #FF9800; }
+                    .eye { fill: black; }
+                    .body-fill { fill: #fff; stroke: #ccc; stroke-width: 1; }
+                </style>
+            </defs>
+
+            <!-- Ground shadow -->
+            <ellipse cx="300" cy="340" rx="160" ry="10" fill="rgba(0,0,0,0.1)" />
+
+            <!-- WHEELS -->
+            <!-- Back Wheel -->
+            <g transform="translate(180, 280)">
+                <g class="wheel">
+                    <circle cx="0" cy="0" r="45" class="tire" />
+                    <circle cx="0" cy="0" r="40" class="rim" />
+                    <!-- Spokes -->
+                    <line x1="0" y1="-40" x2="0" y2="40" class="spoke" />
+                    <line x1="-40" y1="0" x2="40" y2="0" class="spoke" />
+                    <line x1="-28" y1="-28" x2="28" y2="28" class="spoke" />
+                    <line x1="-28" y1="28" x2="28" y2="-28" class="spoke" />
+                </g>
+            </g>
+
+            <!-- Front Wheel -->
+            <g transform="translate(420, 280)">
+                <g class="wheel">
+                    <circle cx="0" cy="0" r="45" class="tire" />
+                    <circle cx="0" cy="0" r="40" class="rim" />
+                    <!-- Spokes -->
+                    <line x1="0" y1="-40" x2="0" y2="40" class="spoke" />
+                    <line x1="-40" y1="0" x2="40" y2="0" class="spoke" />
+                    <line x1="-28" y1="-28" x2="28" y2="28" class="spoke" />
+                    <line x1="-28" y1="28" x2="28" y2="-28" class="spoke" />
+                </g>
+            </g>
+
+            <!-- BICYCLE FRAME -->
+            <!-- Back triangle -->
+            <path d="M180,280 L280,280 L230,180 Z" class="frame" />
+            <!-- Front triangle -->
+            <path d="M280,280 L230,180 L380,180 L420,280" class="frame" />
+            <!-- Fork & Stem -->
+            <path d="M380,180 L420,150" class="frame" /> <!-- Fork -->
+            <path d="M390,180 L390,140" class="frame" /> <!-- Stem -->
+
+            <!-- Handlebars -->
+            <path d="M370,140 Q390,140 400,160" class="handlebar" />
+
+            <!-- Seat Post & Seat -->
+            <path d="M230,180 L210,130" class="frame" />
+            <path d="M190,130 L230,130" class="seat" />
+
+            <!-- CENTER CRANK -->
+            <circle cx="280" cy="280" r="8" fill="#555" />
+
+            <!-- THE PELICAN -->
+            <g class="pelican-body">
+                
+                <!-- Leg Right (Behind Frame) -->
+                <!-- Simple path that simulates rotation around 280,280 -->
+                <path d="M280,220 Q310,260 280,300" stroke="#FF9800" stroke-width="6" fill="none" class="leg-right"/>
+                
+                <!-- Leg Left (Front of Frame) -->
+                <path d="M280,220 Q250,260 280,300" stroke="#FF9800" stroke-width="6" fill="none" class="leg-left"/>
+
+                <!-- Tail feathers -->
+                <path d="M180,150 L140,170 L170,190 Z" fill="#eee" />
+
+                <!-- Main Body -->
+                <ellipse cx="210" cy="150" rx="45" ry="30" class="body-fill" transform="rotate(-15 210 150)" />
+                
+                <!-- Neck -->
+                <path d="M230,135 Q260,100 250,60" stroke="#fff" stroke-width="25" fill="none" stroke-linecap="round" />
+                <!-- Neck outline correction -->
+                <path d="M230,135 Q260,100 250,60" stroke="#ccc" stroke-width="26" fill="none" stroke-linecap="round" opacity="0.3" />
+
+                <!-- Head -->
+                <circle cx="255" cy="55" r="18" fill="#fff" stroke="#ccc" stroke-width="1" />
+
+                <!-- Beak -->
+                <path d="M270,50 Q310,60 310,70 Q310,90 260,80" class="beak" />
+                <!-- Beak detail -->
+                <path d="M270,75 L305,75" stroke="#E65100" stroke-width="2" />
+
+                <!-- Eye -->
+                <circle cx="260" cy="50" r="3" class="eye" />
+                <path d="M255,45 L265,48" stroke="black" stroke-width="1" opacity="0.5"/>
+
+                <!-- Wing -->
+                <path d="M190,150 Q220,170 240,140" stroke="#eee" stroke-width="20" fill="none" stroke-linecap="round" />
+                <!-- Wing highlight -->
+                <path d="M190,150 Q220,170 240,140" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round" />
+                
+                <!-- Wind feathers (Crest) -->
+                <path d="M250,35 Q240,20 230,30" stroke="#fff" stroke-width="3" stroke-linecap="round" class="feathers" />
+                <path d="M252,40 Q235,25 225,35" stroke="#fff" stroke-width="2" stroke-linecap="round" class="feathers" />
+
+            </g>
+        </svg>
+    </div>
+</body>
+</html>

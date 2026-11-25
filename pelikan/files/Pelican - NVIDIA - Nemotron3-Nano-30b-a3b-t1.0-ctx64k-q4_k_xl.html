@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pelican on Bicycle SVG Animation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .scene {
+      animation: float 8s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+    .pelican-body {
+      fill: #2c3e50;
+    }
+    .pelican-beak {
+      fill: #e67e22;
+    }
+    .pelican-eye {
+      fill: #f1c40f;
+    }
+    .bicycle-frame {
+      fill: #34495e;
+    }
+    .bicycle-wheel {
+      fill: #2c3e50;
+    }
+    .bicycle-tire {
+      fill: #e74c3c;
+    }
+    .handlebars {
+      fill: #bdc3c7;
+    }
+    .pedal {
+      fill: #e67e22;
+    }
+    .road {
+      fill: #7f8c8d;
+    }
+    .cloud {
+      fill: #ffffff;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <svg viewBox="0 0 800 400" class="scene">
+      <!-- Road -->
+      <rect class="road" x="0" y="300" width="800" height="100" />
+      
+      <!-- Bicycle -->
+      <g transform="translate(100,250)">
+        <!-- Frame -->
+        <path class="bicycle-frame" d="M0,0 L100,0 L120,50 L80,50 L0,50 L0,0" />
+        
+        <!-- Wheels -->
+        <circle class="bicycle-wheel" cx="50" cy="0" r="25" />
+        <circle class="bicycle-wheel" cx="150" cy="0" r="25" />
+        <circle class="bicycle-tire" cx="50" cy="0" r="20" />
+        <circle class="bicycle-tire" cx="150" cy="0" r="20" />
+        
+        <!-- Handlebars -->
+        <rect class="handlebars" x="20" y="10" width="60" height="15" />
+        
+        <!-- Pedals -->
+        <rect class="pedal" x="30" y="45" width="15" height="10" />
+        <rect class="pedal" x="120" y="45" width="15" height="10" />
+        
+        <!-- Pedal rotation -->
+        <g transform="translate(30,45)">
+          <circle class="pedal" r="5" fill="#e67e22" />
+          <animateTransform 
+            attributeName="transform"
+            type="rotate"
+            from="0 0 0"
+            to="360 0 0"
+            dur="2s"
+            repeatCount="indefinite" />
+        </g>
+      </g>
+      
+      <!-- Pelican -->
+      <g transform="translate(300,180)">
+        <!-- Body -->
+        <path class="pelican-body" d="M0,0 L30,50 L50,20 L70,50 L100,0 L70,-20 L50,-40 L30,-20 L0,0" />
+        
+        <!-- Beak -->
+        <path class="pelican-beak" d="M70,0 L90,10 L85,5 L70,0" />
+        
+        <!-- Eye -->
+        <circle class="pelican-eye" cx="60" cy="-10" r="3" />
+        
+        <!-- Wings (flapping) -->
+        <g transform="translate(0,0)">
+          <path d="M0,0 L20,-30 L40,0 L20,-10 L0,0" fill="#2c3e50" opacity="0.7">
+            <animateTransform 
+              attributeName="transform"
+              type="translate"
+              attributeType="XML"
+              from="0 0"
+              to="0 -20"
+              dur="1s"
+              repeatCount="indefinite" />
+          </path>
+          <path d="M0,0 L20,-30 L40,0 L20,-10 L0,0" fill="#2c3e50" opacity="0.7" transform="translate(0,0) scale(-1,1)">
+            <animateTransform 
+              attributeName="transform"
+              type="translate"
+              attributeType="XML"
+              from="0 0"
+              to="0 -20"
+              dur="1s"
+              repeatCount="indefinite" />
+          </path>
+        </g>
+        
+        <!-- Tail -->
+        <path d="M100,20 L120,30 L110,25" fill="#2c3e50" />
+      </g>
+      
+      <!-- Clouds -->
+      <g class="cloud" transform="translate(500,100)">
+        <circle cx="0" cy="0" r="25" />
+        <circle cx="30" cy="0" r="25" />
+        <circle cx="15" cy="-15" r="25" />
+      </g>
+      <g class="cloud" transform="translate(650,80)">
+        <circle cx="0" cy="0" r="20" />
+        <circle cx="25" cy="0" r="20" />
+        <circle cx="10" cy="-10" r="20" />
+      </g>
+    </svg>
+  </div>
+
+  <script>
+    // Add subtle floating animation to the whole scene
+    document.addEventListener('DOMContentLoaded', function() {
+      const scene = document.querySelector('.scene');
+      scene.addEventListener('animationiteration', function() {
+        // Randomly adjust position slightly for organic feel
+        const x = (Math.random() - 0.5) * 10;
+        const y = (Math.random() - 0.5) * 5;
+        scene.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+  </script>
+</body>
+</html>

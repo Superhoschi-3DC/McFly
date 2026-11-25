@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pelican Riding a Bicycle</title>
+</head>
+<body>
+    <svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bicycle frame -->
+        <path id="bikeFrame" d="M50,150 L100,50 L200,50 L250,150 L200,250 L100,250 Z" fill="black">
+            <animate attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" dur="10s" repeatCount="indefinite" />
+        </path>
+
+        <!-- Bicycle wheels -->
+        <circle cx="100" cy="200" r="25" fill="black">
+            <animate attributeName="transform" attributeType="XML" type="rotate" from="0 100 200" to="-360 100 200" dur="3s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="250" cy="200" r="25" fill="black">
+            <animate attributeName="transform" attributeType="XML" type="rotate" from="0 250 200" to="360 250 200" dur="3s" repeatCount="indefinite" />
+        </circle>
+
+        <!-- Pelican (simplified) -->
+        <path id="pelican" d="M200,120 Q250,50 300,120 Q350,190 200,190 Q50,200 200,120 Z" fill="white">
+            <animate attributeName="transform" attributeType="XML" type="translate" values="0 0; 20 0; 0 0" dur="1s" repeatCount="indefinite" />
+        </path>
+
+        <!-- Pelican beak -->
+        <path d="M300,120 L350,120 L325,150 Z" fill="orange">
+            <animate attributeName="transform" attributeType="XML" type="rotate" values="0 325 150; 10 325 150; 0 325 150" dur="2s" repeatCount="indefinite" />
+        </path>
+
+        <!-- Road -->
+        <rect x="0" y="220" width="400" height="30" fill="#333" />
+        <!-- Road lines -->
+        <line x1="50" y1="220" x2="50" y2="250" stroke="#DDD" stroke-width="2">
+            <animate attributeName="x1" values="50;400;50" dur="10s" repeatCount="indefinite" />
+            <animate attributeName="x2" values="50;400;50" dur="10s" repeatCount="indefinite" />
+        </line>
+    </svg>
+</body>
+</html>

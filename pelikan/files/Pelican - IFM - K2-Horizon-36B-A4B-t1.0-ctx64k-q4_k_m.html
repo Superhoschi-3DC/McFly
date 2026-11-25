@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelican Riding Bicycle</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #e6f7ff, #cceeff);
+            overflow: hidden;
+        }
+        .scene {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <svg width="600" height="400" viewBox="0 0 600 400">
+            <!-- Road -->
+            <rect x="0" y="300" width="600" height="100" fill="#7c8b5a"/>
+            <path d="M0,300 L600,300" stroke="#5a6c45" stroke-width="2"/>
+            <path d="M0,350 L600,350" stroke="#5a6c45" stroke-width="2"/>
+            
+            <!-- Ground shadow -->
+            <ellipse cx="300" cy="305" rx="60" ry="3" fill="rgba(0,0,0,0.3)"/>
+            
+            <!-- Bicycle -->
+            <!-- Wheel back -->
+            <circle cx="250" cy="250" r="35" fill="none" stroke="#333" stroke-width="3"/>
+            <path d="M250,215 Q255,215 260,250 Q265,285 250,285 Q235,285 240,250 Q245,215 250,215 Z" fill="none" stroke="#333" stroke-width="3"/>
+            <!-- Spoke animation -->
+            <g id="backWheelSpokes">
+                <line x1="250" y1="215" x2="250" y2="285" stroke="#555" stroke-width="2"/>
+                <line x1="250" y1="215" x2="225" y2="250" stroke="#555" stroke-width="2"/>
+                <line x1="250" y1="215" x2="275" y2="250" stroke="#555" stroke-width="2"/>
+            </g>
+            
+            <!-- Wheel front -->
+            <circle cx="380" cy="250" r="35" fill="none" stroke="#333" stroke-width="3"/>
+            <path d="M380,215 Q385,215 390,250 Q395,285 380,285 Q365,285 370,250 Q375,215 380,215 Z" fill="none" stroke="#333" stroke-width="3"/>
+            <!-- Spoke animation -->
+            <g id="frontWheelSpokes">
+                <line x1="380" y1="215" x2="380" y2="285" stroke="#555" stroke-width="2"/>
+                <line x1="380" y1="215" x2="355" y2="250" stroke="#555" stroke-width="2"/>
+                <line x1="380" y1="215" x2="405" y2="250" stroke="#555" stroke-width="2"/>
+            </g>
+            
+            <!-- Frame -->
+            <path d="M270,215 Q290,200 330,205 Q350,210 370,225" fill="none" stroke="#4a4a4a" stroke-width="4"/>
+            <path d="M250,250 L380,250" stroke="#4a4a4a" stroke-width="4"/>
+            <!-- Pedal -->
+            <path d="M380,250 L385,270" stroke="#333" stroke-width="3"/>
+            <!-- Handlebar -->
+            <path d="M370,220 Q380,210 400,215" stroke="#4a4a4a" stroke-width="3"/>
+            
+            <!-- Pelican -->
+            <g id="pelican" transform="translate(315,180) scale(1.2)">
+                <!-- Body -->
+                <ellipse cx="0" cy="0" rx="25" ry="15" fill="#8c6d2f" stroke="#5a4218" stroke-width="2"/>
+                <!-- Head -->
+                <circle cx="0" cy="-30" r="12" fill="#8c6d2f" stroke="#5a4218" stroke-width="2"/>
+                <!-- Beak -->
+                <path d="M-5,-20 Q0,-35 10,-15 Q18,0 8,5 Q-2,12 -5,4 Q-8,0 -12,8 Q-16,16 -22,6 Q-28,-4 -30,0" fill="#e8a87c" stroke="#8a5a20" stroke-width="1"/>
+                <!-- Eyes -->
+                <circle cx="-6" cy="-33" r="3" fill="white"/>
+                <circle cx="-6" cy="-33" r="1.5" fill="black"/>
+                <!-- Wings -->
+                <path d="M-15,5 Q-20,-5 -15,-15 Q-8,-10 5,-15 Q18,-8 10,0 Q0,8 -5,3" fill="#7d5a20" stroke="#4a2e10" stroke-width="1"/>
+                <!-- Legs -->
+                <path d="M-8,15 Q-10,35 -5,45 Q-2,55 0,50 Q2,45 5,55 Q8,65 10,55 Q12,45 10,15" fill="none" stroke="#5a4218" stroke-width="2"/>
+                <!-- Tail feathers -->
+                <path d="M-20,5 Q-25,15 -20,25 Q-10,18 0,10 Q10,18 20,25 Q25,15 20,5" stroke="#5a4218" stroke-width="1" fill="none"/>
+                <!-- Wing animation -->
+                <path id="rightWing" d="M-15,5 Q-20,-5 -15,-15 Q-8,-10 5,-15 Q18,-8 10,0 Q0,8 -5,3" fill="none" stroke="#4a2e10" stroke-width="2"/>
+                <path id="leftWing" d="M15,5 Q20,-5 15,-15 Q8,-10 -5,-15 Q-18,-8 -10,0 Q0,8 5,3" fill="none" stroke="#4a2e10" stroke-width="2"/>
+            </g>
+            
+            <!-- Sun -->
+            <circle cx="500" cy="80" r="40" fill="none" stroke="#ffcc00" stroke-width="3"/>
+            <g id="sunRays">
+                <line x1="500" y1="30" x2="500" y2="20" stroke="#ffcc00" stroke-width="2"/>
+                <line x1="540" y1="30" x2="550" y2="30" stroke="#ffcc00" stroke-width="2"/>
+                <line x1="500" y1="30" x2="500" y2="20" stroke="#ffcc00" stroke-width="2"/>
+                <line x1="460" y1="30" x2="450" y2="30" stroke="#ffcc00" stroke-width="2"/>
+                <line x1="500" y1="70" x2="500" y2="80" stroke="#ffcc00" stroke-width="2"/>
+                <line x1="540" y1="70" x2="550" y2="70" stroke="#ffcc00" stroke-width="2"/>
+                <line x1="500" y1="70" x2="500" y2="80" stroke="#ffcc00" stroke-width="2"/>
+                <line x1="460" y1="70" x2="450" y2="70" stroke="#ffcc00" stroke-width="2"/>
+            </g>
+            
+            <!-- Clouds -->
+            <g id="clouds">
+                <ellipse cx="100" cy="120" rx="60" ry="20" fill="white" opacity="0.8"/>
+                <ellipse cx="130" cy="115" rx="40" ry="18" fill="white" opacity="0.8"/>
+                <ellipse cx="70" cy="125" rx="30" ry="15" fill="white" opacity="0.8"/>
+                
+                <ellipse cx="500" cy="100" rx="60" ry="20" fill="white" opacity="0.8"/>
+                <ellipse cx="530" cy="95" rx="40" ry="18" fill="white" opacity="0.8"/>
+                <ellipse cx="470" cy="105" rx="30" ry="15" fill="white" opacity="0.8"/>
+            </g>
+        </svg>
+    </div>
+
+    <script>
+        // Animation parameters
+        const bikeSpeed = 0.05;
+        let bikeX = 0;
+        let spokeRotation = 0;
+        let wingAngle = 0;
+        let sunRotation = 0;
+        let cloud1X = 0;
+        let cloud2X = 0;
+        
+        // Animation loop
+        function animate() {
+            // Move bike and pelican to the right
+            bikeX += bikeSpeed;
+            if (bikeX > 400) {
+                bikeX = -400;
+            }
+            
+            // Rotate bicycle wheels
+            spokeRotation += 0.1;
+            document.getElementById('backWheelSpokes').setAttribute('transform', 
+                `rotate(${spokeRotation} 250 250)`);
+            document.getElementById('frontWheelSpokes').setAttribute('transform', 
+                `rotate(${spokeRotation} 380 250)`);
+            
+            // Flap wings
+            wingAngle += 0.15;
+            const leftWingPos = `M15,5 Q20,-5 15,-15 Q8,-10 -5,-15 Q-18,-8 -10,0 Q0,8 5,3`;
+            const leftWingNeg = `M15,5 Q20,15 15,25 Q8,10 -5,15 Q-18,8 -10,0 Q0,-8 5,3`;
+            const rightWingPos = `M-15,5 Q-20,-5 -15,-15 Q-8,-10 5,-15 Q18,-8 10,0 Q0,8 -5,3`;
+            const rightWingNeg = `M-15,5 Q-20,15 -15,25 Q-8,10 -5,15 Q18,8 10,0 Q0,-8 5,3`;
+            
+            const usePos = wingAngle % (Math.PI * 2) < Math.PI;
+            const leftWing = usePos ? leftWingPos : leftWingNeg;
+            const rightWing = usePos ? rightWingPos : rightWingNeg;
+            
+            document.getElementById('rightWing').setAttribute('d', rightWing);
+            document.getElementById('leftWing').setAttribute('d', leftWing);
+            
+            // Rotate sun
+            sunRotation += 0.02;
+            document.getElementById('sunRays').setAttribute('transform', 
+                `rotate(${sunRotation} 500 30)`);
+            
+            // Move clouds
+            cloud1X -= 0.02;
+            cloud2X += 0.01;
+            if (cloud1X < -120) cloud1X = 120;
+            if (cloud2X > 620) cloud2X = -620;
+            
+            document.querySelector('.scene svg').setAttribute('transform', 
+                `translate(${bikeX},0)`);
+            document.querySelector('#clouds').setAttribute('transform', 
+                `translate(${cloud1X} 0)`);
+            document.querySelector('#clouds').setAttribute('transform', 
+                `translate(${cloud1X + 400} 0)`);
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    </script>
+</body>
+</html>

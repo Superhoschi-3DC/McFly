@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelican on a Bicycle</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e0f7fa;
+            font-family: sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        svg {
+            width: 500px;
+            height: auto;
+        }
+
+        /* Animation for the wheels */
+        .wheel {
+            transform-origin: center;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Animation for the pedals/legs */
+        .pedal-leg {
+            transform-origin: 220px 250px; /* Center of the crank */
+            animation: pedal 1s linear infinite;
+        }
+
+        @keyframes pedal {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Gentle bobbing for the pelican's body */
+        .pelican-body {
+            animation: bob 1s ease-in-out infinite;
+        }
+
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Blinking eye */
+        .eye {
+            animation: blink 3s infinite;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { opacity: 1; }
+            95% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- Ground Line -->
+            <line x1="50" y1="280" x2="350" y2="280" stroke="#555" stroke-width="4" stroke-linecap="round" />
+
+            <!-- Bicycle Frame -->
+            <g stroke="#d32f2f" stroke-width="6" fill="none" stroke-linejoin="round">
+                <path d="M150 250 L220 250 L270 180 L180 180 Z" /> <!-- Main triangle -->
+                <path d="M270 180 L300 250" /> <!-- Rear stay -->
+                <path d="M150 250 L130 180" /> <!-- Front fork -->
+                <path d="M130 180 L120 160" /> <!-- Handlebars -->
+            </g>
+
+            <!-- Wheels -->
+            <g class="wheel" style="transform-box: fill-box;">
+                <circle cx="130" cy="250" r="30" stroke="#333" stroke-width="4" fill="white" />
+                <line x1="130" y1="220" x2="130" y2="280" stroke="#333" stroke-width="2" />
+                <line x1="100" y1="250" x2="160" y2="250" stroke="#333" stroke-width="2" />
+            </g>
+            <g class="wheel" style="transform-box: fill-box;">
+                <circle cx="280" cy="250" r="30" stroke="#333" stroke-width="4" fill="white" />
+                <line x1="280" y1="220" x2="280" y2="280" stroke="#333" stroke-width="2" />
+                <line x1="250" y1="250" x2="310" y2="250" stroke="#333" stroke-width="2" />
+            </g>
+
+            <!-- Pedaling Leg -->
+            <g class="pedal-leg">
+                <line x1="220" y1="250" x2="220" y2="270" stroke="#fbc02d" stroke-width="4" />
+                <rect x="210" y="270" width="20" height="5" fill="#333" />
+            </g>
+
+            <!-- Pelican -->
+            <g class="pelican-body">
+                <!-- Body -->
+                <ellipse cx="200" cy="170" rx="40" ry="30" fill="white" stroke="#ddd" stroke-width="1" />
+                
+                <!-- Neck and Head -->
+                <path d="M230 160 Q260 160 260 130" stroke="white" stroke-width="20" fill="none" stroke-linecap="round" />
+                <circle cx="260" cy="120" r="15" fill="white" />
+                
+                <!-- The Beak (The iconic pelican part) -->
+                <path d="M265 115 L310 120 Q310 150 265 140 Z" fill="#ffb300" />
+                
+                <!-- Eye -->
+                <circle class="eye" cx="265" cy="115" r="2" fill="black" />
+                
+                <!-- Wing -->
+                <path d="M180 170 Q200 150 220 170" fill="none" stroke="#ccc" stroke-width="5" stroke-linecap="round" />
+                
+                <!-- Leg connecting to pedal -->
+                <line x1="210" y1="190" x2="220" y2="250" stroke="#fbc02d" stroke-width="4" />
+            </g>
+
+            <!-- Handlebar grips -->
+            <circle cx="120" cy="160" r="4" fill="#333" />
+        </svg>
+        <h2 style="color: #006064;">Pedaling Pelican</h2>
+    </div>
+
+</body>
+</html>

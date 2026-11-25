@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1f3a">
   <title>Pelikan — Superhoschi@3DC</title>
-  <meta name="description" content="Pelikan, Stand 25.11.2026. Eine HTML-Datei. Ergebnisse sind noch nicht veröffentlicht.">
-  <link rel="stylesheet" href="site.css?v=10">
+  <meta name="description" content="Pelikan, 30 HTML-Dateien. Prompt: animated svg of a pelican riding a bicycle in a single html file.">
+  <link rel="stylesheet" href="site.css?v=11">
 </head>
-<body>
+<body class="pelikan-page">
   <a class="skip" href="#inhalt">Zum Inhalt</a>
-  <div class="shell">
+  <div class="shell shell-wide">
     <nav class="rail" aria-label="Seiten">
       <ul>
         <li><a href="index.html">Start</a></li>
@@ -23,79 +23,1156 @@
       <article class="card">
         <p class="eyebrow">Superhoschi@3DC</p>
         <h1>Pelikan</h1>
-        <p class="lead">Stand 25.11.2026</p>
-
-        <section aria-labelledby="aufgabe-title">
-          <h2 id="aufgabe-title">Aufgabe</h2>
-          <p>Die Aufgabe ist eine HTML-Datei. Ältere Dateien bleiben.</p>
-          <p class="label" id="prompt-label">Prompt, genau</p>
-          <div class="prompt-block">
-            <pre><code id="prompt-text" lang="en" translate="no" spellcheck="false">animated svg of a pelican riding a bicycle in a single html file</code></pre>
-            <div class="prompt-actions">
-              <button type="button" class="copy" id="copy-prompt">Kopieren</button>
-            </div>
+        <p class="label" id="prompt-label">Prompt, genau</p>
+        <div class="prompt-block">
+          <pre><code id="prompt-text" lang="en" translate="no" spellcheck="false">animated svg of a pelican riding a bicycle in a single html file</code></pre>
+          <div class="prompt-actions">
+            <button type="button" class="copy" id="copy-prompt">Kopieren</button>
           </div>
-          <p id="copy-status" class="status" role="status"></p>
-        </section>
-
-        <section aria-labelledby="regeln-title">
-          <h2 id="regeln-title">Laufregeln</h2>
-          <dl class="facts">
-            <div>
-              <dt>Lokale Läufe</dt>
-              <dd>Lokale Läufe nutzen llama-server (llama.cpp). Gleichzeitig läuft nur ein lokales Modell.</dd>
-            </div>
-            <div>
-              <dt>Stack</dt>
-              <dd>Der Stack ist llama.cpp, nicht oMLX. Zahlen aus oMLX oder aus Foren werden nicht übernommen.</dd>
-            </div>
-            <div>
-              <dt>Lokale Karten</dt>
-              <dd>Temperatur 1, Kontext 65536, UD-Q4_K_XL, sofern diese Datei existiert. K2 Horizon hat kein XL und bleibt Q4_K_M.</dd>
-            </div>
-          </dl>
-        </section>
-
-        <section aria-labelledby="modelle-title">
-          <h2 id="modelle-title">Genannte Modelle</h2>
-          <p>Diese beiden Modelle sind genannt. Ein Ergebnis ist dafür nicht eingetragen.</p>
-          <ul class="models">
-            <li>Ministral 3 3B</li>
-            <li>älteres Gemma-4-31B Q4_K_M</li>
-          </ul>
-        </section>
-
-        <section aria-labelledby="ergebnisse-title">
-          <h2 id="ergebnisse-title">Ergebnisse</h2>
-          <p class="rules">Standardsortierung: Hersteller, dann Modell.</p>
-          <p class="rules">Herkunftsfilter: Alles, Cloud, Cursor, Lokal. Cursor und xAI sind derselbe Anbieter.</p>
-          <div class="filter" role="group" aria-label="Herkunftsfilter" data-origin-filter aria-controls="results-table">
-            <button type="button" data-origin="alles" aria-pressed="true">Alles</button>
-            <button type="button" data-origin="cloud" aria-pressed="false">Cloud</button>
-            <button type="button" data-origin="cursor" aria-pressed="false">Cursor</button>
-            <button type="button" data-origin="lokal" aria-pressed="false">Lokal</button>
-          </div>
-          <p id="origin-status" class="status">Angezeigt: Alles.</p>
-          <div class="table-wrap">
-            <table id="results-table">
-              <thead>
-                <tr>
-                  <th scope="col">Hersteller</th>
-                  <th scope="col">Modell</th>
-                  <th scope="col">Herkunft</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr id="no-results" class="empty">
-                  <td colspan="3">Ergebnisse sind noch nicht veröffentlicht.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+        </div>
+        <p id="copy-status" class="status" role="status"></p>
       </article>
+      <div class='pelikan-toolbar'>
+        <label>Hersteller
+          <select id='pelikan-filter-manufacturer'>
+            <option value=''>Alle</option><option value='Alibaba'>Alibaba</option><option value='Anthropic'>Anthropic</option><option value='Google'>Google</option><option value='IFM'>IFM</option><option value='Mistral'>Mistral</option><option value='NVIDIA'>NVIDIA</option><option value='OpenAI'>OpenAI</option><option value='xAI'>xAI</option><option value='Zhipu'>Zhipu</option>
+          </select>
+        </label>
+        <label>Modell
+          <select id='pelikan-filter-modell'>
+            <option value=''>Alle</option><option value='composer-2.5'>Composer 2.5 - Cursor</option><option value='devstral-2'>Devstral Small 2 - lokal</option><option value='gemini-3.8-flash-high---cursor'>Gemini 3.8 Flash high - Cursor</option><option value='argon-high---cursor'>Gemini 4 Argon high - Cursor</option><option value='carbon-high---cursor'>Gemini 4 Carbon high - Cursor</option><option value='gemini-4-neon-high---cursor'>Gemini 4 Neon high - Cursor</option><option value='gemma4'>Gemma 4 26B - lokal</option><option value='glm-4.7'>GLM 4.7 Flash - lokal</option><option value='gpt-6.0-luna'>GPT 6.0 Luna high Codex</option><option value='gpt-6.1-astra'>GPT 6.1 Astra high Codex</option><option value='gpt-6.1-sol'>GPT 6.1 Sol high Codex</option><option value='gpt-6.1-terra'>GPT 6.1 Terra high Codex</option><option value='gpt-6.2-astra'>GPT 6.2 Astra high Codex</option><option value='gpt-6.2-sol'>GPT 6.2 Sol high Codex</option><option value='gpt-oss-20b-t1.0-ctx64k-ud_q4_k_xl'>gpt-oss 20B - lokal</option><option value='grok-4.6'>Grok 4.6 high ctx256k - Cursor</option><option value='grok-4.7'>Grok 4.7 high ctx256k - Cursor</option><option value='haiku-5.5'>Haiku 5.5 high - Chat</option><option value='k2-horizon'>K2 Horizon - lokal</option><option value='small-3.2-24b-t1.0-ctx64k-ud_q4_k_xl'>Mistral Small 3.2 - lokal</option><option value='nemotron-30b-a3b'>Nemotron 3 nano - lokal</option><option value='nemotron-bolt-74b'>Nemotron 3.5 Bolt - lokal</option><option value='opus-5.5-high---cursor'>Opus 5.5 high - Cursor</option><option value='qwen3.6'>Qwen 3.6 - lokal</option><option value='qwen3.7'>Qwen 3.7-Plus thinking - Chat</option><option value='qwen3.8'>Qwen 3.8 - lokal</option><option value='qwen4.0'>Qwen 4.0-Max thinking - Chat</option><option value='sonnet-5.5'>Sonnet 5.5 high - Chat</option>
+          </select>
+        </label>
+        <label>Herkunft
+          <select id='pelikan-filter-origin'>
+            <option value=''>Alles</option>
+            <option value='cloud'>Cloud</option>
+            <option value='cursor'>Cursor</option>
+            <option value='local'>Lokal</option>
+          </select>
+        </label>
+        <label>Sortierung
+          <select id='pelikan-filter-sort' autocomplete='off'>
+            <option value='vendor-model' selected>Hersteller-Modell</option>
+            <option value='release'>Veröffentlichungsdatum</option>
+          </select>
+        </label>
+      </div>
+      <div id='pelikan-board' class='pelikan-board'>
+            <section class='pelikan-vendor-section' data-manufacturer='Alibaba'>
+              <h2 class='pelikan-vendor-title'>Alibaba</h2>
+              <div class='pelikan-vendor-break' aria-hidden='true'></div>
+              <div class='pelikan-row'>
+      <article class='pelikan-item'
+        data-manufacturer='Alibaba'
+        data-modell='qwen3.6'
+        data-modell-label='Qwen 3.6 - lokal'
+        data-origin='local'
+        data-title='Qwen 3.6 - lokal'
+        data-mtime='1795467531.906399'
+        data-strength='10'
+        data-version='3.6'
+        data-release='1776384000.0'
+        data-row-slot='0'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Qwen 3.6 - lokal</h3>
+              <span class='pelikan-item-release'>04/2026</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 35B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.6-35b-a3b-t1.0-ctx64k-q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.6-35b-a3b-t1.0-ctx64k-q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.6-35b-a3b-t1.0-ctx64k-q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:linear-gradient(to bottom, #87CEEB, #E0F7FA)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Alibaba%20-%20Qwen%203.6-35b-a3b-t1.0-ctx64k-q4_k_xl.html.jpg' style='background:linear-gradient(to bottom, #87CEEB, #E0F7FA)'
+            alt='Vorschau Qwen 3.6 - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Alibaba'
+        data-modell='qwen3.7'
+        data-modell-label='Qwen 3.7-Plus thinking - Chat'
+        data-origin='cloud'
+        data-title='Qwen 3.7-Plus thinking - Chat'
+        data-mtime='1795367844.557406'
+        data-strength='16'
+        data-version='3.7'
+        data-release='1780272000.0'
+        data-row-slot='1'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Qwen 3.7-Plus thinking - Chat</h3>
+              <span class='pelikan-item-release'>06/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.7-Plus%20thinking%20Chat.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.7-Plus%20thinking%20Chat.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.7-Plus%20thinking%20Chat.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#2c3e50' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Alibaba%20-%20Qwen%203.7-Plus%20thinking%20Chat.html.jpg' style='background:#2c3e50'
+            alt='Vorschau Qwen 3.7-Plus thinking - Chat' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Alibaba'
+        data-modell='qwen3.8'
+        data-modell-label='Qwen 3.8 - lokal'
+        data-origin='local'
+        data-title='Qwen 3.8 - lokal'
+        data-mtime='1795516372.471380'
+        data-strength='18'
+        data-version='3.8'
+        data-release='1786665600.0'
+        data-row-slot='2'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Qwen 3.8 - lokal</h3>
+              <span class='pelikan-item-release'>08/2026</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 27B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.8-27b-t1.0-ctx64k-q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.8-27b-t1.0-ctx64k-q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.8-27b-t1.0-ctx64k-q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#1e2a3a' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Alibaba%20-%20Qwen%203.8-27b-t1.0-ctx64k-q4_k_xl.html.jpg' style='background:#1e2a3a'
+            alt='Vorschau Qwen 3.8 - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Alibaba'
+        data-modell='qwen3.8'
+        data-modell-label='Qwen 3.8-Max thinking - Chat'
+        data-origin='cloud'
+        data-title='Qwen 3.8-Max thinking - Chat'
+        data-mtime='1795371450.206022'
+        data-strength='22'
+        data-version='3.8'
+        data-release='1786579200.0'
+        data-row-slot='3'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Qwen 3.8-Max thinking - Chat</h3>
+              <span class='pelikan-item-release'>08/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.8-Max%20thinking%20Chat.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.8-Max%20thinking%20Chat.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%203.8-Max%20thinking%20Chat.html'
+          data-stage-only='0'
+          data-frame-only='1'
+          data-scene-root='0' style='background:radial-gradient(1200px 800px at 50% -10%, #24405e, #101822 60%)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Alibaba%20-%20Qwen%203.8-Max%20thinking%20Chat.html.jpg' style='background:radial-gradient(1200px 800px at 50% -10%, #24405e, #101822 60%)'
+            alt='Vorschau Qwen 3.8-Max thinking - Chat' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Alibaba'
+        data-modell='qwen4.0'
+        data-modell-label='Qwen 4.0-Max thinking - Chat'
+        data-origin='cloud'
+        data-title='Qwen 4.0-Max thinking - Chat'
+        data-mtime='1795371495.341349'
+        data-strength='32'
+        data-version='4'
+        data-release='1794787200.0'
+        data-row-slot='4'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Qwen 4.0-Max thinking - Chat</h3>
+              <span class='pelikan-item-release'>11/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%204.0-Max%20thinking%20Chat.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%204.0-Max%20thinking%20Chat.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Alibaba%20-%20Qwen%204.0-Max%20thinking%20Chat.html'
+          data-stage-only='1'
+          data-frame-only='0'
+          data-scene-root='0' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Alibaba%20-%20Qwen%204.0-Max%20thinking%20Chat.html.jpg'
+            alt='Vorschau Qwen 4.0-Max thinking - Chat' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    </div>
+            </section>
+            
+
+            <section class='pelikan-vendor-section' data-manufacturer='Anthropic'>
+              <h2 class='pelikan-vendor-title'>Anthropic</h2>
+              <div class='pelikan-vendor-break' aria-hidden='true'></div>
+              <div class='pelikan-row'>
+      <article class='pelikan-item'
+        data-manufacturer='Anthropic'
+        data-modell='haiku-5.5'
+        data-modell-label='Haiku 5.5 high - Chat'
+        data-origin='cloud'
+        data-title='Haiku 5.5 high - Chat'
+        data-mtime='1795375390.808123'
+        data-strength='10'
+        data-version='5.5'
+        data-release='1791331200.0'
+        data-row-slot='0'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Haiku 5.5 high - Chat</h3>
+              <span class='pelikan-item-release'>10/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Anthropic%20-%20Haiku%205.5%20high%20Chat.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Anthropic%20-%20Haiku%205.5%20high%20Chat.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Anthropic%20-%20Haiku%205.5%20high%20Chat.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#f1f5f9' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Anthropic%20-%20Haiku%205.5%20high%20Chat.html.jpg' style='background:#f1f5f9'
+            alt='Vorschau Haiku 5.5 high - Chat' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Anthropic'
+        data-modell='sonnet-5.5'
+        data-modell-label='Sonnet 5.5 high - Chat'
+        data-origin='cloud'
+        data-title='Sonnet 5.5 high - Chat'
+        data-mtime='1795519144.348650'
+        data-strength='25'
+        data-version='5.5'
+        data-release='1790553600.0'
+        data-row-slot='1'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Sonnet 5.5 high - Chat</h3>
+              <span class='pelikan-item-release'>09/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Anthropic%20-%20Sonnet%205.5%20high%20Chat.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Anthropic%20-%20Sonnet%205.5%20high%20Chat.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Anthropic%20-%20Sonnet%205.5%20high%20Chat.html?pelikan-card=1'
+          data-stage-only='0'
+          data-frame-only='1'
+          data-scene-root='1' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Anthropic%20-%20Sonnet%205.5%20high%20Chat.html.jpg'
+            alt='Vorschau Sonnet 5.5 high - Chat' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Anthropic'
+        data-modell='opus-5.5-high---cursor'
+        data-modell-label='Opus 5.5 high - Cursor'
+        data-origin='cursor'
+        data-title='Opus 5.5 high - Cursor'
+        data-mtime='1795390520.204427'
+        data-strength='40'
+        data-version='5.5'
+        data-release='1790035200.0'
+        data-row-slot='2'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Opus 5.5 high - Cursor</h3>
+              <span class='pelikan-item-release'>09/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Anthropic%20-%20Opus%205.5%20high%20-%20Cursor.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Anthropic%20-%20Opus%205.5%20high%20-%20Cursor.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Anthropic%20-%20Opus%205.5%20high%20-%20Cursor.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:linear-gradient(#8fd3ff,#e6f6ff 60%,#9ccf6a 60%,#7bb24c)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Anthropic%20-%20Opus%205.5%20high%20-%20Cursor.html.jpg' style='background:linear-gradient(#8fd3ff,#e6f6ff 60%,#9ccf6a 60%,#7bb24c)'
+            alt='Vorschau Opus 5.5 high - Cursor' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    </div>
+            </section>
+            
+
+            <section class='pelikan-vendor-section' data-manufacturer='Google'>
+              <h2 class='pelikan-vendor-title'>Google</h2>
+              <div class='pelikan-vendor-break' aria-hidden='true'></div>
+              <div class='pelikan-row'>
+      <article class='pelikan-item'
+        data-manufacturer='Google'
+        data-modell='gemma4'
+        data-modell-label='Gemma 4 26B - lokal'
+        data-origin='local'
+        data-title='Gemma 4 26B - lokal'
+        data-mtime='1795441942.402752'
+        data-strength='12'
+        data-version='4'
+        data-release='1774915200.0'
+        data-row-slot='0'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Gemma 4 26B - lokal</h3>
+              <span class='pelikan-item-release'>03/2026</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 26B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Google%20-%20Gemma4-26b-a4b-t1.0-ctx64k-q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Google%20-%20Gemma4-26b-a4b-t1.0-ctx64k-q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Google%20-%20Gemma4-26b-a4b-t1.0-ctx64k-q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#87CEEB' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Google%20-%20Gemma4-26b-a4b-t1.0-ctx64k-q4_k_xl.html.jpg' style='background:#87CEEB'
+            alt='Vorschau Gemma 4 26B - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Google'
+        data-modell='gemma4'
+        data-modell-label='Gemma 4 31B - lokal'
+        data-origin='local'
+        data-title='Gemma 4 31B - lokal'
+        data-mtime='1795522412.557563'
+        data-strength='26'
+        data-version='4'
+        data-release='1774915200.0'
+        data-row-slot='1'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Gemma 4 31B - lokal</h3>
+              <span class='pelikan-item-release'>03/2026</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 31B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Google%20-%20Gemma4-31b-it-t1.0-ctx64k-ud_q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Google%20-%20Gemma4-31b-it-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Google%20-%20Gemma4-31b-it-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#e0f7fa' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Google%20-%20Gemma4-31b-it-t1.0-ctx64k-ud_q4_k_xl.html.jpg' style='background:#e0f7fa'
+            alt='Vorschau Gemma 4 31B - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Google'
+        data-modell='gemini-3.8-flash-high---cursor'
+        data-modell-label='Gemini 3.8 Flash high - Cursor'
+        data-origin='cursor'
+        data-title='Gemini 3.8 Flash high - Cursor'
+        data-mtime='1795389157.711785'
+        data-strength='12'
+        data-version='3.8'
+        data-release='1788307200.0'
+        data-row-slot='2'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Gemini 3.8 Flash high - Cursor</h3>
+              <span class='pelikan-item-release'>09/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Google%20-%20Gemini%203.8%20Flash%20high%20-%20Cursor.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Google%20-%20Gemini%203.8%20Flash%20high%20-%20Cursor.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Google%20-%20Gemini%203.8%20Flash%20high%20-%20Cursor.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#0c1322' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Google%20-%20Gemini%203.8%20Flash%20high%20-%20Cursor.html.jpg' style='background:#0c1322'
+            alt='Vorschau Gemini 3.8 Flash high - Cursor' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Google'
+        data-modell='argon-high---cursor'
+        data-modell-label='Gemini 4 Argon high - Cursor'
+        data-origin='cursor'
+        data-title='Gemini 4 Argon high - Cursor'
+        data-mtime='1795390487.159489'
+        data-strength='24'
+        data-version='4'
+        data-release='1791849600.0'
+        data-row-slot='3'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Gemini 4 Argon high - Cursor</h3>
+              <span class='pelikan-item-release'>10/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Google%20-%20Argon%20high%20-%20Cursor.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Google%20-%20Argon%20high%20-%20Cursor.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Google%20-%20Argon%20high%20-%20Cursor.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:linear-gradient(180deg, #0f172a 0%, #1e293b 100%)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Google%20-%20Argon%20high%20-%20Cursor.html.jpg' style='background:linear-gradient(180deg, #0f172a 0%, #1e293b 100%)'
+            alt='Vorschau Gemini 4 Argon high - Cursor' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Google'
+        data-modell='gemini-4-neon-high---cursor'
+        data-modell-label='Gemini 4 Neon high - Cursor'
+        data-origin='cursor'
+        data-title='Gemini 4 Neon high - Cursor'
+        data-mtime='1795389375.602455'
+        data-strength='24'
+        data-version='4'
+        data-release='1794960000.0'
+        data-row-slot='4'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Gemini 4 Neon high - Cursor</h3>
+              <span class='pelikan-item-release'>11/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Google%20-%20Gemini%204%20Neon%20high%20-%20Cursor.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Google%20-%20Gemini%204%20Neon%20high%20-%20Cursor.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Google%20-%20Gemini%204%20Neon%20high%20-%20Cursor.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:linear-gradient(180deg, #3c8dad 0%, #6cb8d4 55%, #e5cca3 100%)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Google%20-%20Gemini%204%20Neon%20high%20-%20Cursor.html.jpg' style='background:linear-gradient(180deg, #3c8dad 0%, #6cb8d4 55%, #e5cca3 100%)'
+            alt='Vorschau Gemini 4 Neon high - Cursor' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Google'
+        data-modell='carbon-high---cursor'
+        data-modell-label='Gemini 4 Carbon high - Cursor'
+        data-origin='cursor'
+        data-title='Gemini 4 Carbon high - Cursor'
+        data-mtime='1795401443.916566'
+        data-strength='24'
+        data-version='4'
+        data-release='1794268800.0'
+        data-row-slot='5'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Gemini 4 Carbon high - Cursor</h3>
+              <span class='pelikan-item-release'>11/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Google%20-%20Carbon%20high%20-%20Cursor.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Google%20-%20Carbon%20high%20-%20Cursor.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Google%20-%20Carbon%20high%20-%20Cursor.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:radial-gradient(circle at 30% 15%, var(--bg-top), var(--bg-bottom))' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Google%20-%20Carbon%20high%20-%20Cursor.html.jpg' style='background:radial-gradient(circle at 30% 15%, var(--bg-top), var(--bg-bottom))'
+            alt='Vorschau Gemini 4 Carbon high - Cursor' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    </div>
+            </section>
+            
+
+            <section class='pelikan-vendor-section' data-manufacturer='IFM'>
+              <h2 class='pelikan-vendor-title'>IFM</h2>
+              <div class='pelikan-vendor-break' aria-hidden='true'></div>
+              <div class='pelikan-row'>
+      <article class='pelikan-item'
+        data-manufacturer='IFM'
+        data-modell='k2-horizon'
+        data-modell-label='K2 Horizon - lokal'
+        data-origin='local'
+        data-title='K2 Horizon - lokal'
+        data-mtime='1795469952.914941'
+        data-strength='30'
+        data-version='1'
+        data-release='1788393600.0'
+        >
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>K2 Horizon - lokal</h3>
+              <span class='pelikan-item-release'>09/2026</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_M · 36B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20IFM%20-%20K2-Horizon-36B-A4B-t1.0-ctx64k-q4_k_m.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20IFM%20-%20K2-Horizon-36B-A4B-t1.0-ctx64k-q4_k_m.html'
+          data-preview-src='pelikan/files/Pelican%20-%20IFM%20-%20K2-Horizon-36B-A4B-t1.0-ctx64k-q4_k_m.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:linear-gradient(to bottom, #e6f7ff, #cceeff)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20IFM%20-%20K2-Horizon-36B-A4B-t1.0-ctx64k-q4_k_m.html.jpg' style='background:linear-gradient(to bottom, #e6f7ff, #cceeff)'
+            alt='Vorschau K2 Horizon - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    </div>
+            </section>
+            
+
+            <section class='pelikan-vendor-section' data-manufacturer='Mistral'>
+              <h2 class='pelikan-vendor-title'>Mistral</h2>
+              <div class='pelikan-vendor-break' aria-hidden='true'></div>
+              <div class='pelikan-row'>
+      <article class='pelikan-item'
+        data-manufacturer='Mistral'
+        data-modell='small-3.2-24b-t1.0-ctx64k-ud_q4_k_xl'
+        data-modell-label='Mistral Small 3.2 - lokal'
+        data-origin='local'
+        data-title='Mistral Small 3.2 - lokal'
+        data-mtime='1795524266.464936'
+        data-strength='50'
+        data-version='0'
+        data-release='1750377600.0'
+        >
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Mistral Small 3.2 - lokal</h3>
+              <span class='pelikan-item-release'>06/2025</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 24B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Mistral%20-%20Small-3.2-24b-t1.0-ctx64k-ud_q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Mistral%20-%20Small-3.2-24b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Mistral%20-%20Small-3.2-24b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Mistral%20-%20Small-3.2-24b-t1.0-ctx64k-ud_q4_k_xl.html.jpg'
+            alt='Vorschau Mistral Small 3.2 - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='Mistral'
+        data-modell='devstral-2'
+        data-modell-label='Devstral Small 2 - lokal'
+        data-origin='local'
+        data-title='Devstral Small 2 - lokal'
+        data-mtime='1795516765.251777'
+        data-strength='50'
+        data-version='3'
+        data-release='1765238400.0'
+        >
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Devstral Small 2 - lokal</h3>
+              <span class='pelikan-item-release'>12/2025</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 24B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Mistral%20-%20Devstral-Small-2-24b-t1.0-ctx64k-ud_q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Mistral%20-%20Devstral-Small-2-24b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Mistral%20-%20Devstral-Small-2-24b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#f0f8ff' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Mistral%20-%20Devstral-Small-2-24b-t1.0-ctx64k-ud_q4_k_xl.html.jpg' style='background:#f0f8ff'
+            alt='Vorschau Devstral Small 2 - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    </div>
+            </section>
+            
+
+            <section class='pelikan-vendor-section' data-manufacturer='NVIDIA'>
+              <h2 class='pelikan-vendor-title'>NVIDIA</h2>
+              <div class='pelikan-vendor-break' aria-hidden='true'></div>
+              <div class='pelikan-row'>
+      <article class='pelikan-item'
+        data-manufacturer='NVIDIA'
+        data-modell='nemotron-30b-a3b'
+        data-modell-label='Nemotron 3 nano - lokal'
+        data-origin='local'
+        data-title='Nemotron 3 nano - lokal'
+        data-mtime='1795443546.839388'
+        data-strength='14'
+        data-version='3'
+        data-release='1765756800.0'
+        >
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Nemotron 3 nano - lokal</h3>
+              <span class='pelikan-item-release'>12/2025</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 30B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20NVIDIA%20-%20Nemotron3-Nano-30b-a3b-t1.0-ctx64k-q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20NVIDIA%20-%20Nemotron3-Nano-30b-a3b-t1.0-ctx64k-q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20NVIDIA%20-%20Nemotron3-Nano-30b-a3b-t1.0-ctx64k-q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20NVIDIA%20-%20Nemotron3-Nano-30b-a3b-t1.0-ctx64k-q4_k_xl.html.jpg' style='background:linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c)'
+            alt='Vorschau Nemotron 3 nano - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='NVIDIA'
+        data-modell='nemotron-bolt-74b'
+        data-modell-label='Nemotron 3.5 Bolt - lokal'
+        data-origin='local'
+        data-title='Nemotron 3.5 Bolt - lokal'
+        data-mtime='1795522630.757922'
+        data-strength='50'
+        data-version='3.5'
+        data-release='1792022400.0'
+        >
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Nemotron 3.5 Bolt - lokal</h3>
+              <span class='pelikan-item-release'>10/2026</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 74B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20NVIDIA%20-%20Nemotron3.5-Bolt-74b-a9b-t1.0-ctx64k-ud_q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20NVIDIA%20-%20Nemotron3.5-Bolt-74b-a9b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20NVIDIA%20-%20Nemotron3.5-Bolt-74b-a9b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#f0f0f0' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20NVIDIA%20-%20Nemotron3.5-Bolt-74b-a9b-t1.0-ctx64k-ud_q4_k_xl.html.jpg' style='background:#f0f0f0'
+            alt='Vorschau Nemotron 3.5 Bolt - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    </div>
+            </section>
+            
+
+            <section class='pelikan-vendor-section' data-manufacturer='OpenAI'>
+              <h2 class='pelikan-vendor-title'>OpenAI</h2>
+              <div class='pelikan-vendor-break' aria-hidden='true'></div>
+              <div class='pelikan-row'>
+      <article class='pelikan-item'
+        data-manufacturer='OpenAI'
+        data-modell='gpt-oss-20b-t1.0-ctx64k-ud_q4_k_xl'
+        data-modell-label='gpt-oss 20B - lokal'
+        data-origin='local'
+        data-title='gpt-oss 20B - lokal'
+        data-mtime='1795524370.224273'
+        data-strength='50'
+        data-version='0'
+        data-release='1754352000.0'
+        data-row-slot='-1'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>gpt-oss 20B - lokal</h3>
+              <span class='pelikan-item-release'>08/2025</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 20B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20OpenAI%20-%20gpt-oss-20b-t1.0-ctx64k-ud_q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20OpenAI%20-%20gpt-oss-20b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20OpenAI%20-%20gpt-oss-20b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#e0f7fa' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20OpenAI%20-%20gpt-oss-20b-t1.0-ctx64k-ud_q4_k_xl.html.jpg' style='background:#e0f7fa'
+            alt='Vorschau gpt-oss 20B - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='OpenAI'
+        data-modell='gpt-6.0-luna'
+        data-modell-label='GPT 6.0 Luna high Codex'
+        data-origin='cloud'
+        data-title='GPT 6.0 Luna high Codex'
+        data-mtime='1795388691.081787'
+        data-strength='10'
+        data-version='6'
+        data-release='1790035200.0'
+        data-row-slot='0'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>GPT 6.0 Luna high Codex</h3>
+              <span class='pelikan-item-release'>09/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.0%20Luna%20high%20Codex.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.0%20Luna%20high%20Codex.html'
+          data-preview-src='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.0%20Luna%20high%20Codex.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#bceef0' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20OpenAI%20-%20GPT%206.0%20Luna%20high%20Codex.html.jpg' style='background:#bceef0'
+            alt='Vorschau GPT 6.0 Luna high Codex' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='OpenAI'
+        data-modell='gpt-6.1-terra'
+        data-modell-label='GPT 6.1 Terra high Codex'
+        data-origin='cloud'
+        data-title='GPT 6.1 Terra high Codex'
+        data-mtime='1795388619.712051'
+        data-strength='22'
+        data-version='6.1'
+        data-release='1792972800.0'
+        data-row-slot='1'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>GPT 6.1 Terra high Codex</h3>
+              <span class='pelikan-item-release'>10/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Terra%20high%20Codex.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Terra%20high%20Codex.html'
+          data-preview-src='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Terra%20high%20Codex.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#cdeef2' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Terra%20high%20Codex.html.jpg' style='background:#cdeef2'
+            alt='Vorschau GPT 6.1 Terra high Codex' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='OpenAI'
+        data-modell='gpt-6.1-sol'
+        data-modell-label='GPT 6.1 Sol high Codex'
+        data-origin='cloud'
+        data-title='GPT 6.1 Sol high Codex'
+        data-mtime='1795392903.050771'
+        data-strength='38'
+        data-version='6.1'
+        data-release='1790640000.0'
+        data-row-slot='2'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>GPT 6.1 Sol high Codex</h3>
+              <span class='pelikan-item-release'>09/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Sol%20high%20Codex.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Sol%20high%20Codex.html'
+          data-preview-src='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Sol%20high%20Codex.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:var(--paper)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Sol%20high%20Codex.html.jpg' style='background:var(--paper)'
+            alt='Vorschau GPT 6.1 Sol high Codex' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='OpenAI'
+        data-modell='gpt-6.1-astra'
+        data-modell-label='GPT 6.1 Astra high Codex'
+        data-origin='cloud'
+        data-title='GPT 6.1 Astra high Codex'
+        data-mtime='1795442549.392316'
+        data-strength='50'
+        data-version='6.1'
+        data-release='1788393600.0'
+        data-row-slot='3'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>GPT 6.1 Astra high Codex</h3>
+              <span class='pelikan-item-release'>09/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Astra%20high%20Codex.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Astra%20high%20Codex.html'
+          data-preview-src='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Astra%20high%20Codex.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:var(--paper)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20OpenAI%20-%20GPT%206.1%20Astra%20high%20Codex.html.jpg' style='background:var(--paper)'
+            alt='Vorschau GPT 6.1 Astra high Codex' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='OpenAI'
+        data-modell='gpt-6.2-sol'
+        data-modell-label='GPT 6.2 Sol high Codex'
+        data-origin='cloud'
+        data-title='GPT 6.2 Sol high Codex'
+        data-mtime='1795442682.079312'
+        data-strength='38'
+        data-version='6.2'
+        data-release='1794873600.0'
+        data-row-slot='5'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>GPT 6.2 Sol high Codex</h3>
+              <span class='pelikan-item-release'>11/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.2%20Sol%20high%20Codex.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.2%20Sol%20high%20Codex.html'
+          data-preview-src='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.2%20Sol%20high%20Codex.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:var(--paper)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20OpenAI%20-%20GPT%206.2%20Sol%20high%20Codex.html.jpg' style='background:var(--paper)'
+            alt='Vorschau GPT 6.2 Sol high Codex' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='OpenAI'
+        data-modell='gpt-6.2-astra'
+        data-modell-label='GPT 6.2 Astra high Codex'
+        data-origin='cloud'
+        data-title='GPT 6.2 Astra high Codex'
+        data-mtime='1795442795.347560'
+        data-strength='50'
+        data-version='6.2'
+        data-release='1794873600.0'
+        data-row-slot='6'>
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>GPT 6.2 Astra high Codex</h3>
+              <span class='pelikan-item-release'>11/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.2%20Astra%20high%20Codex.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.2%20Astra%20high%20Codex.html'
+          data-preview-src='pelikan/files/Pelican%20-%20OpenAI%20-%20GPT%206.2%20Astra%20high%20Codex.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#f6f1e7' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20OpenAI%20-%20GPT%206.2%20Astra%20high%20Codex.html.jpg' style='background:#f6f1e7'
+            alt='Vorschau GPT 6.2 Astra high Codex' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    </div>
+            </section>
+            
+
+            <section class='pelikan-vendor-section' data-manufacturer='xAI'>
+              <h2 class='pelikan-vendor-title'>xAI</h2>
+              <div class='pelikan-vendor-break' aria-hidden='true'></div>
+              <div class='pelikan-row'>
+      <article class='pelikan-item'
+        data-manufacturer='xAI'
+        data-modell='composer-2.5'
+        data-modell-label='Composer 2.5 - Cursor'
+        data-origin='cursor'
+        data-title='Composer 2.5 - Cursor'
+        data-mtime='1795367601.801715'
+        data-strength='18'
+        data-version='2.5'
+        data-release='1779062400.0'
+        >
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Composer 2.5 - Cursor</h3>
+              <span class='pelikan-item-release'>05/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20xAi%20-%20Composer%202.5%20-%20Cursor.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20xAi%20-%20Composer%202.5%20-%20Cursor.html'
+          data-preview-src='pelikan/files/Pelican%20-%20xAi%20-%20Composer%202.5%20-%20Cursor.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:linear-gradient(180deg, #87ceeb 0%, #b8e6f5 45%, #7ec8a3 75%, #5a9e6f 100%)' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20xAi%20-%20Composer%202.5%20-%20Cursor.html.jpg' style='background:linear-gradient(180deg, #87ceeb 0%, #b8e6f5 45%, #7ec8a3 75%, #5a9e6f 100%)'
+            alt='Vorschau Composer 2.5 - Cursor' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='xAI'
+        data-modell='grok-4.6'
+        data-modell-label='Grok 4.6 high ctx256k - Cursor'
+        data-origin='cursor'
+        data-title='Grok 4.6 high ctx256k - Cursor'
+        data-mtime='1795525258.120465'
+        data-strength='32'
+        data-version='4.6'
+        data-release='1786492800.0'
+        >
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Grok 4.6 high ctx256k - Cursor</h3>
+              <span class='pelikan-item-release'>08/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20xAi%20-%20Grok%204.6%20high%20ctx256k%20-%20Cursor.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20xAi%20-%20Grok%204.6%20high%20ctx256k%20-%20Cursor.html'
+          data-preview-src='pelikan/files/Pelican%20-%20xAi%20-%20Grok%204.6%20high%20ctx256k%20-%20Cursor.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#0b1c2c' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20xAi%20-%20Grok%204.6%20high%20ctx256k%20-%20Cursor.html.jpg' style='background:#0b1c2c'
+            alt='Vorschau Grok 4.6 high ctx256k - Cursor' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    
+
+      <article class='pelikan-item'
+        data-manufacturer='xAI'
+        data-modell='grok-4.7'
+        data-modell-label='Grok 4.7 high ctx256k - Cursor'
+        data-origin='cursor'
+        data-title='Grok 4.7 high ctx256k - Cursor'
+        data-mtime='1795370511.021277'
+        data-strength='32'
+        data-version='4.7'
+        data-release='1789948800.0'
+        >
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>Grok 4.7 high ctx256k - Cursor</h3>
+              <span class='pelikan-item-release'>09/2026</span>
+            </div>
+            
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20xAi%20-%20Grok%204.7%20high%20ctx256k%20-%20Cursor.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20xAi%20-%20Grok%204.7%20high%20ctx256k%20-%20Cursor.html'
+          data-preview-src='pelikan/files/Pelican%20-%20xAi%20-%20Grok%204.7%20high%20ctx256k%20-%20Cursor.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#8ec8ea' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20xAi%20-%20Grok%204.7%20high%20ctx256k%20-%20Cursor.html.jpg' style='background:#8ec8ea'
+            alt='Vorschau Grok 4.7 high ctx256k - Cursor' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    </div>
+            </section>
+            
+
+            <section class='pelikan-vendor-section' data-manufacturer='Zhipu'>
+              <h2 class='pelikan-vendor-title'>Zhipu</h2>
+              <div class='pelikan-vendor-break' aria-hidden='true'></div>
+              <div class='pelikan-row'>
+      <article class='pelikan-item'
+        data-manufacturer='Zhipu'
+        data-modell='glm-4.7'
+        data-modell-label='GLM 4.7 Flash - lokal'
+        data-origin='local'
+        data-title='GLM 4.7 Flash - lokal'
+        data-mtime='1795465537.814995'
+        data-strength='12'
+        data-version='4.7'
+        data-release='1768780800.0'
+        >
+        <header class='pelikan-item-head'>
+          <div class='pelikan-item-titles'>
+            <div class='pelikan-item-title-row'>
+              <h3 class='pelikan-item-title'>GLM 4.7 Flash - lokal</h3>
+              <span class='pelikan-item-release'>01/2026</span>
+            </div>
+            <p class='pelikan-item-params'>t 1.0 · ctx 64k · Q4_K_XL · 30B</p>
+          </div>
+          <button type='button' class='button pelikan-fullscreen'
+            data-fs='pelikan/files/Pelican%20-%20Zhipu%20-%20GLM-4.7-Flash-30b-a3b-t1.0-ctx64k-ud_q4_k_xl.html'>Vollbild</button>
+        </header>
+        <div class='pelikan-preview-wrap' data-fullscreen='pelikan/files/Pelican%20-%20Zhipu%20-%20GLM-4.7-Flash-30b-a3b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-preview-src='pelikan/files/Pelican%20-%20Zhipu%20-%20GLM-4.7-Flash-30b-a3b-t1.0-ctx64k-ud_q4_k_xl.html'
+          data-stage-only='0'
+          data-frame-only='0'
+          data-scene-root='0' style='background:#e0f7fa' tabindex='0' role='button'
+          aria-label='Vollbild öffnen'>
+          <img class='pelikan-thumb' src='pelikan/thumbs/Pelican%20-%20Zhipu%20-%20GLM-4.7-Flash-30b-a3b-t1.0-ctx64k-ud_q4_k_xl.html.jpg' style='background:#e0f7fa'
+            alt='Vorschau GLM 4.7 Flash - lokal' loading='eager' decoding='async' width='420' height='280'>
+          <div class='pelikan-live-slot' aria-hidden='true'></div>
+        </div>
+      </article>
+    </div>
+            </section>
+            </div>
+      <div id='pelikan-fs' class='pelikan-fs is-hidden' role='dialog' aria-modal='true' aria-label='Pelikan-Vollbild'>
+        <div class='pelikan-fs-bar'>
+          <button type='button' class='pelikan-fs-close' id='pelikan-fs-close'>Schließen</button>
+        </div>
+        <iframe class='pelikan-fs-frame' id='pelikan-fs-frame' title='Pelikan-Vollbild'
+          sandbox='allow-scripts allow-same-origin'></iframe>
+      </div>
+
     </main>
   </div>
-  <script src="site.js"></script>
+  <script src="pelikan.js?v=11"></script>
+  <script src="site.js?v=11"></script>
 </body>
 </html>
