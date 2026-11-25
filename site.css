@@ -812,9 +812,12 @@ body.pelikan-page .pelikan-item-title-row {
   align-items: baseline;
   justify-content: space-between;
   gap: 0.6rem;
+  width: 100%;
 }
 
 body.pelikan-page h3.pelikan-item-title {
+  flex: 1 1 auto;
+  min-width: 0;
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
@@ -824,12 +827,32 @@ body.pelikan-page h3.pelikan-item-title {
   color: var(--ink);
 }
 
-body.pelikan-page .pelikan-item-release {
+body.pelikan-page .pelikan-item-meta {
   flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+body.pelikan-page .pelikan-item-release {
   color: var(--faint);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
+  line-height: 1.3;
   white-space: nowrap;
+}
+
+body.pelikan-page .pelikan-item-runtime {
+  color: #fdba74;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+body.pelikan-page .pelikan-item-runtime.is-empty {
+  display: none;
 }
 
 body.pelikan-page .pelikan-item-params {
