@@ -93,16 +93,6 @@ a {
   max-width: 100%;
 }
 
-.rail-label {
-  margin: 0 0 0.7rem;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-align: center;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-
 .rail ul {
   list-style: none;
   display: grid;
