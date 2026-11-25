@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1ea">
+  <title>Pelikan — Superhoschi@3DC</title>
+  <meta name="description" content="Pelikan, Stand 25.11.2026. Eine HTML-Datei. Ergebnisse sind noch nicht veröffentlicht.">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <a class="skip" href="#inhalt">Zum Inhalt</a>
+  <div class="layout">
+    <nav class="tree" aria-label="Seiten">
+      <ul>
+        <li><a href="index.html">Start</a></li>
+        <li><a href="pelikan.html" aria-current="page">Pelikan</a></li>
+        <li><a href="mmlu.html">MMLU</a></li>
+        <li><a href="mk25.html">McFly Benchmark Mk 2.5</a></li>
+      </ul>
+    </nav>
+    <div class="wrap">
+      <header class="site-header">
+        <p class="eyebrow">Superhoschi@3DC</p>
+        <h1>Pelikan</h1>
+        <p class="stand">Stand 25.11.2026</p>
+      </header>
+
+      <main id="inhalt">
+        <section aria-labelledby="aufgabe-title">
+          <h2 id="aufgabe-title">Aufgabe</h2>
+          <p>Die Aufgabe ist eine HTML-Datei. Ältere Dateien bleiben.</p>
+          <p class="label" id="prompt-label">Prompt, genau</p>
+          <div class="prompt-block">
+            <pre><code id="prompt-text" lang="en" translate="no" spellcheck="false">animated svg of a pelican riding a bicycle in a single html file</code></pre>
+            <div class="prompt-actions">
+              <button type="button" class="copy" id="copy-prompt">Kopieren</button>
+            </div>
+          </div>
+          <p id="copy-status" class="status" role="status"></p>
+        </section>
+
+        <section aria-labelledby="regeln-title">
+          <h2 id="regeln-title">Laufregeln</h2>
+          <dl class="facts">
+            <div>
+              <dt>Lokale Läufe</dt>
+              <dd>Lokale Läufe nutzen llama-server (llama.cpp). Gleichzeitig läuft nur ein lokales Modell.</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Der Stack ist llama.cpp, nicht oMLX. Zahlen aus oMLX oder aus Foren werden nicht übernommen.</dd>
+            </div>
+            <div>
+              <dt>Lokale Karten</dt>
+              <dd>Temperatur 1, Kontext 65536, UD-Q4_K_XL, sofern diese Datei existiert. K2 Horizon hat kein XL und bleibt Q4_K_M.</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section aria-labelledby="modelle-title">
+          <h2 id="modelle-title">Genannte Modelle</h2>
+          <p>Diese beiden Modelle sind genannt. Ein Ergebnis ist dafür nicht eingetragen.</p>
+          <ul class="models">
+            <li>Ministral 3 3B</li>
+            <li>älteres Gemma-4-31B Q4_K_M</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="ergebnisse-title">
+          <h2 id="ergebnisse-title">Ergebnisse</h2>
+          <p class="rules">Standardsortierung: Hersteller, dann Modell.</p>
+          <p class="rules">Herkunftsfilter: Alles, Cloud, Cursor, Lokal. Cursor und xAI sind derselbe Anbieter.</p>
+          <div class="filter" role="group" aria-label="Herkunftsfilter" data-origin-filter aria-controls="results-table">
+            <button type="button" data-origin="alles" aria-pressed="true">Alles</button>
+            <button type="button" data-origin="cloud" aria-pressed="false">Cloud</button>
+            <button type="button" data-origin="cursor" aria-pressed="false">Cursor</button>
+            <button type="button" data-origin="lokal" aria-pressed="false">Lokal</button>
+          </div>
+          <p id="origin-status" class="status">Angezeigt: Alles.</p>
+          <div class="table-wrap">
+            <table id="results-table">
+              <thead>
+                <tr>
+                  <th scope="col">Hersteller</th>
+                  <th scope="col">Modell</th>
+                  <th scope="col">Herkunft</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="no-results" class="empty">
+                  <td colspan="3">Ergebnisse sind noch nicht veröffentlicht.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>Pelikan · Superhoschi@3DC</p>
+        <p>GitHub-Organisation Superhoschi-3DC</p>
+      </footer>
+    </div>
+  </div>
+  <script src="site.js"></script>
+</body>
+</html>
