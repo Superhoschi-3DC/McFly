@@ -243,6 +243,23 @@ h1 {
   text-wrap: pretty;
 }
 
+.hero-byline {
+  margin: 0;
+  color: var(--faint);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.hero-intro {
+  margin: 1.1rem 0 0;
+  max-width: 42rem;
+  color: var(--ink);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
 main section {
   margin-top: 2.1rem;
 }
