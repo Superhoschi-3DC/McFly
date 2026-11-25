@@ -1,5 +1,5 @@
 async function startMk25() {
-  const response = await fetch('mk25/benchmark-data.json?v=18');
+  const response = await fetch('mk25/benchmark-data.json?v=19');
   if (!response.ok) throw new Error('Benchmarkdaten fehlen');
   const payload = await response.json();
     const defaultComparisonColumnCount = () => window.matchMedia('(max-width: 700px)').matches ? 2 : 5;
