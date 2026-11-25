@@ -1,8 +1,7 @@
 async function startMk25() {
-  const response = await fetch('mk25/benchmark-data.json?v=14');
+  const response = await fetch('mk25/benchmark-data.json?v=16');
   if (!response.ok) throw new Error('Benchmarkdaten fehlen');
   const payload = await response.json();
-    const state = { category: '', model: '', status: '', search: '' };
     const defaultComparisonColumnCount = () => window.matchMedia('(max-width: 700px)').matches ? 2 : 5;
     const compareState = {
       columnCount: defaultComparisonColumnCount(),
@@ -93,9 +92,6 @@ async function startMk25() {
         } catch (_error) {
           // Storage may be disabled; the dashboard remains usable.
         }
-        if (detail.open && ['under50', 'latest', 'runs', 'failures'].includes(detail.dataset.dashboardDetailsKey)) {
-          renderDeferredTables();
-        }
       }));
     }
     const fmtMs = (ms) => {
@@ -104,10 +100,6 @@ async function startMk25() {
       if (ms >= 1000) return (ms / 1000).toFixed(1) + ' s';
       return ms + ' ms';
     };
-    const fmtMinutes = (ms) => {
-      if (ms === null || ms === undefined || ms === '') return '';
-      return (ms / 60000).toFixed(1) + ' min';
-    };
     const fmtInt = (value) => Number(value || 0).toLocaleString('de-DE');
     const fmtDateTime = (value) => {
       if (!value) return 'nicht erfasst';
@@ -115,8 +107,6 @@ async function startMk25() {
       return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString('de-DE');
     };
     const esc = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-    const statusBadge = (status) => `<span class="status status-${esc(status)}">${esc(status || 'unknown')}</span>`;
-    const passRate = (run) => run.total ? ((run.passed / run.total) * 100).toFixed(1) + '%' : '';
     const valuePassRate = (value) => {
       if (!value || !value.total) return -1;
       return value.passed / value.total;
@@ -169,41 +159,6 @@ async function startMk25() {
       const badges = `${quality}${speed}`;
       return `<td class="matrix-cell"><span class="matrix-rate ${rateClass(value)}">${esc(rate)}</span><div class="matrix-goals"><strong>${primaryCount}</strong> Aufgaben</div><span class="matrix-duration">${fmtMs(value.duration_ms)}</span><div class="matrix-badges">${badges || '&nbsp;'}</div></td>`;
     };
-
-    const under50Detail = (row) => {
-      return row.cause_detail || '';
-    };
-
-    function fillSelect(id, values, label) {
-      const select = document.getElementById(id);
-      select.innerHTML = `<option value="">${label}</option>` + values.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
-    }
-
-    function matchesRun(run) {
-      if (state.category && run.category !== state.category) return false;
-      if (state.model && run.model !== state.model) return false;
-      if (state.status) {
-        if (state.status === 'pass') {
-          if (!run.passed || run.failed || run.errors || run.timeout) return false;
-        } else if (!((run.case_rows || []).some(c => c.status === state.status) || run[state.status])) {
-          return false;
-        }
-      }
-      if (state.search) {
-        const hay = [run.run_id, run.category, run.model, run.backend, run.file, run.kind].join(' ').toLowerCase();
-        if (!hay.includes(state.search)) return false;
-      }
-      return true;
-    }
-
-    function renderTable(id, headers, rows, emptyText) {
-      const table = document.getElementById(id);
-      if (!rows.length) {
-        table.innerHTML = `<tbody><tr><td class="muted">${esc(emptyText)}</td></tr></tbody>`;
-        return;
-      }
-      table.innerHTML = `<thead><tr>${headers.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody>`;
-    }
 
     function compareOptionsByKey() {
       return Object.fromEntries((payload.release_matrix?.options || []).map(option => [option.key, option]));
@@ -1112,10 +1067,14 @@ async function startMk25() {
         .filter(row => !groupedCategories.has(row.category))
         .forEach(row => rows.push(`<tr>${categoryRowHtml(row)}</tr>`));
 
-      document.getElementById('matrixTable').innerHTML = `
+      const matrixTable = document.getElementById('matrixTable');
+      matrixTable.innerHTML = `
         <thead>${headerRows}</thead>
         <tbody>${rows.join('')}</tbody>
       `;
+      const fittedColumns = columnKeys.filter(Boolean).length || columnKeys.length;
+      matrixTable.style.width = '100%';
+      matrixTable.style.minWidth = `${168 + fittedColumns * 160}px`;
       const matrixWrap = document.getElementById('matrixWrap');
       const matrixHead = document.querySelector('#matrixTable thead');
       matrixHeaderResizeObserver?.disconnect();
@@ -1158,180 +1117,8 @@ async function startMk25() {
       });
     }
 
-    function filteredBackendSummary() {
-      if (!hasActivePreselection()) return payload.backend_summary || [];
-      const definitions = [
-        ['Ollama', 'ollama', 'ollama_key'],
-        ['llama.cpp', 'llamacpp', 'llamacpp_key'],
-      ];
-      const options = compareOptionsByKey();
-      const totals = Object.fromEntries(definitions.map(([backend]) => [backend, {
-        passed: 0, total: 0, duration_ms: 0, models: 0,
-      }]));
-      (payload.backend_comparison || []).forEach(pair => {
-        definitions.forEach(([backend, valueKey, optionKeyField]) => {
-          const value = pair[valueKey];
-          const option = options[pair[optionKeyField]];
-          if (!value || !option || !optionMatchesPreselection(option)) return;
-          totals[backend].passed += Number(value.passed || 0);
-          totals[backend].total += Number(value.total || 0);
-          totals[backend].duration_ms += Number(value.duration_ms || 0);
-          totals[backend].models += 1;
-        });
-      });
-      const timed = Object.values(totals).map(row => row.duration_ms).filter(Boolean);
-      const fastest = timed.length ? Math.min(...timed) : null;
-      return definitions.map(([backend]) => {
-        const total = totals[backend];
-        const qualityPct = total.total ? total.passed / total.total * 100 : null;
-        const speedPct = fastest && total.duration_ms ? fastest / total.duration_ms * 100 : null;
-        return {
-          backend,
-          passed: total.passed,
-          total: total.total,
-          quality_pct: qualityPct,
-          duration_ms: total.duration_ms || null,
-          speed_pct: speedPct,
-          value_pct: qualityPct !== null && speedPct !== null ? qualityPct * speedPct / 100 : null,
-          models: total.models,
-          pending: total.total === 0,
-          note: '',
-        };
-      }).filter(row => !row.pending).sort((left, right) =>
-        (right.value_pct ?? -1) - (left.value_pct ?? -1)
-          || left.backend.localeCompare(right.backend, 'de', { sensitivity: 'base' })
-      );
-    }
-
-    function renderBackendComparison() {
-      const rows = filteredBackendSummary();
-      const validRows = rows.filter(row => row.pending !== true);
-      const maxQuality = Math.max(...validRows.map(row => row.quality_pct ?? -1));
-      const maxSpeed = Math.max(...validRows.map(row => row.speed_pct ?? -1));
-      const valuePct = (row) => {
-        if (row.value_pct !== null && row.value_pct !== undefined) return row.value_pct;
-        if (row.quality_pct === null || row.quality_pct === undefined || row.speed_pct === null || row.speed_pct === undefined) return null;
-        return row.quality_pct * row.speed_pct / 100;
-      };
-      const maxValue = Math.max(...validRows.map(row => valuePct(row) ?? -1));
-      const backendBadges = (row) => {
-        if (row.pending === true) return '';
-        const badges = [];
-        if (row.quality_pct !== null && row.quality_pct !== undefined && row.quality_pct === maxQuality) badges.push('<span class="win win-quality">Qualitaet</span>');
-        if (row.speed_pct !== null && row.speed_pct !== undefined && row.speed_pct === maxSpeed) badges.push('<span class="win win-speed">Zeit</span>');
-        const value = valuePct(row);
-        if (value !== null && value === maxValue) badges.push('<span class="win win-value">Qualität/Tempo</span>');
-        return badges.length ? `<div class="matrix-badges backend-badges">${badges.join('')}</div>` : '';
-      };
-      const qualityCell = (row) => row.pending === true || row.quality_pct === null || row.quality_pct === undefined
-        ? '<td class="matrix-cell backend-matrix-cell"><span class="matrix-rate matrix-rate-warn">offen</span></td>'
-        : `<td class="matrix-cell backend-matrix-cell"><span class="matrix-rate ${row.quality_pct >= 90 ? 'matrix-rate-good' : row.quality_pct >= 50 ? 'matrix-rate-warn' : 'matrix-rate-bad'}">${row.quality_pct.toFixed(1)}%</span><div class="matrix-goals"><strong>${fmtInt(row.passed)}/${fmtInt(row.total)}</strong> Aufgaben</div></td>`;
-      const speedCell = (row) => row.pending === true || row.speed_pct === null || row.speed_pct === undefined
-        ? '<td class="matrix-cell backend-matrix-cell"><span class="matrix-rate matrix-rate-warn">offen</span></td>'
-        : `<td class="matrix-cell backend-matrix-cell"><span class="matrix-rate ${row.speed_pct === 100 ? 'matrix-rate-good' : 'matrix-rate-warn'}">${row.speed_pct.toFixed(1)}%</span><div class="matrix-goals"><strong>${fmtMinutes(row.duration_ms)}</strong> Zeit</div></td>`;
-      const valueCell = (row) => {
-        const value = valuePct(row);
-        if (row.pending === true || value === null) return '<td class="matrix-cell backend-matrix-cell"><span class="matrix-rate matrix-rate-warn">offen</span></td>';
-        return `<td class="matrix-cell backend-matrix-cell"><span class="matrix-rate ${value === maxValue ? 'matrix-rate-good' : 'matrix-rate-warn'}">${value.toFixed(1)}%</span><div class="matrix-goals">Qualitaet x Zeit</div></td>`;
-      };
-      renderTable('backendSummaryMatrixTable', ['Backend', 'Qualitaet', 'Zeit', 'Qualität/Tempo'], rows.map(row => {
-        const statusNote = row.note ? `<br><span class="muted">${esc(row.note)}</span>` : '';
-        return `
-          <tr>
-            <td><strong>${esc(row.backend)}</strong>${backendBadges(row)}<br><span class="muted">${fmtInt(row.models)} Modellpaare,<br>n/a-Kategorien ausgenommen</span>${statusNote}</td>
-            ${qualityCell(row)}
-            ${speedCell(row)}
-            ${valueCell(row)}
-          </tr>`;
-      }), 'Noch keine Backend-Zusammenfassung.');
-    }
-
-    function latestRuns(runs) {
-      const latest = new Map();
-      (runs || []).forEach(run => {
-        const key = JSON.stringify([String(run.category || ''), String(run.model || '')]);
-        const current = latest.get(key);
-        if (!current || String(run.started_at || '') >= String(current.started_at || '')) latest.set(key, run);
-      });
-      return [...latest.values()].sort((left, right) => {
-        const categoryOrder = String(left.category || '').localeCompare(String(right.category || ''));
-        return categoryOrder || String(left.model || '').localeCompare(String(right.model || ''));
-      });
-    }
-
-    function detailSectionOpen(key) {
-      return document.querySelector(`details[data-dashboard-details-key="${key}"]`)?.open === true;
-    }
-
-    function renderDeferredTables() {
-      if (detailSectionOpen('under50')) {
-        const under50 = (payload.under_50 || []).filter(rowMatchesPreselection);
-        renderTable('under50Table', ['Kategorie', 'Modell', 'Wertung', 'Ursache', 'Detail'], under50.map(row => `
-          <tr>
-            <td><code>${esc(row.category)}</code></td>
-            <td><strong>${esc(row.backend)}</strong><br><span class="muted">${esc(row.model)}</span></td>
-            <td>${(row.pass_rate * 100).toFixed(1)}%<br><span class="muted">${esc(row.quality_label || 'Pass')} ${fmtInt(row.passed)}/${fmtInt(row.total)}</span></td>
-            <td>${esc(row.cause_type)}</td>
-            <td>${esc(under50Detail(row))}</td>
-          </tr>`), 'Keine Vergleichszelle unter 50%.');
-      }
-
-      if (detailSectionOpen('latest')) {
-        const latest = latestRuns(payload.runs).filter(matchesRun).filter(rowMatchesPreselection);
-        renderTable('latestTable', ['Kategorie', 'Modell', 'Status', 'Passrate', 'Faelle', 'Durchschnitt/Laufzeit', 'Hoechste Stufe'], latest.map(run => `
-          <tr>
-            <td><code>${esc(run.category)}</code></td>
-            <td>${esc(run.model)}</td>
-            <td>${run.failed || run.errors || run.timeout ? statusBadge('fail') : statusBadge('pass')}</td>
-            <td>${passRate(run)}</td>
-            <td>${fmtInt(run.passed)}/${fmtInt(run.total)}</td>
-            <td>${fmtMs(run.duration_ms)}</td>
-            <td>${esc(run.highest_passed_stage ?? '')}</td>
-          </tr>`), 'Keine Laeufe passen zum Filter.');
-      }
-
-      if (detailSectionOpen('runs')) {
-        const runs = payload.runs.filter(matchesRun).filter(rowMatchesPreselection).sort((a, b) => String(b.started_at || '').localeCompare(String(a.started_at || '')));
-        renderTable('runsTable', ['Start', 'Kategorie', 'Modell', 'Faelle', 'Passrate', 'Dauer', 'Kind'], runs.map(run => `
-          <tr>
-            <td>${esc(run.started_at || '')}</td>
-            <td><code>${esc(run.category)}</code></td>
-            <td>${esc(run.model)}</td>
-            <td>${fmtInt(run.passed)}/${fmtInt(run.total)}</td>
-            <td>${passRate(run)}</td>
-            <td>${fmtMs(run.duration_ms)}</td>
-            <td>${esc(run.kind)}</td>
-          </tr>`), 'Keine Laeufe passen zum Filter.');
-      }
-
-      if (detailSectionOpen('failures')) {
-        const failures = payload.failures.filter(row => {
-          if (state.category && row.category !== state.category) return false;
-          if (state.model && row.model !== state.model) return false;
-          if (state.status && row.status !== state.status && !(state.status === 'pass' && (row.status === 'pass' || row.status === 'ok'))) return false;
-          if (state.search) {
-            const hay = [row.category, row.model, row.run_id, row.case_id, row.title, row.failure_class, row.error_message].join(' ').toLowerCase();
-            if (!hay.includes(state.search)) return false;
-          }
-          return rowMatchesPreselection(row);
-        });
-        renderTable('failureTable', ['Kategorie', 'Modell', 'Stufe', 'Fall', 'Status', 'Fehlerklasse', 'Meldung'], failures.map(row => `
-          <tr>
-            <td><code>${esc(row.category)}</code></td>
-            <td>${esc(row.model)}</td>
-            <td>${esc(row.stage ?? '')}</td>
-            <td><code>${esc(row.case_id)}</code><br><span class="muted">${esc(row.title)}</span></td>
-            <td>${statusBadge(row.status)}</td>
-            <td>${esc(row.failure_class || '')}</td>
-            <td>${esc(row.error_message || '')}</td>
-          </tr>`), 'Keine offenen Faelle in den neuesten Laeufen fuer diesen Filter.');
-      }
-    }
-
     function render() {
       renderMatrix();
-      renderBackendComparison();
-      renderDeferredTables();
     }
 
     let matrixOrientationRefresh;

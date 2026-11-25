@@ -477,11 +477,12 @@
     .mk25 .table-wrap { overflow-x: auto; border-radius: 12px; }
     .mk25 .matrix-wrap {
       max-height: none;
-      overflow: visible;
+      overflow-x: auto;
+      overflow-y: hidden;
       border: 1px solid var(--line);
       background: rgba(17,24,39,.9);
     }
-    .mk25 .collapse-section[data-dashboard-details-key="comparison"] { overflow: visible; }
+    .mk25 .collapse-section[data-dashboard-details-key="comparison"] { overflow: hidden; }
     .mk25 .matrix-wrap table {
       overflow: visible;
       border: 0;
@@ -515,7 +516,7 @@
       box-shadow: 0 1px 0 var(--line);
     }
     .mk25 .matrix-detail-row.details-collapsed { display: none; }
-    .mk25 .table-wrap.matrix-wrap { overflow: visible; }
+    .mk25 .table-wrap.matrix-wrap { overflow-x: auto; overflow-y: hidden; }
     @media print {
       .mk25 #matrixTable thead { display: table-header-group; }
       .mk25 #matrixTable thead tr:nth-child(-n+2) th { padding-top: 2px; padding-bottom: 2px; }
@@ -538,11 +539,6 @@
         overflow-wrap: anywhere;
         word-break: normal;
       }
-      .mk25 #backendSummaryMatrixTable td {
-        white-space: normal;
-        overflow-wrap: anywhere;
-        word-break: normal;
-      }
       .mk25 .preselection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .mk25 .comparison-preselection-tools { grid-column: 1 / -1; }
     }
@@ -559,16 +555,45 @@
   color: #f4f7fb;
 }
 .mk25 h2 { font-size: 1.15rem; margin: 0 0 0.6rem; }
+body.mk25-page .shell,
+body.mk25-page .stage,
+body.mk25-page .card,
+.mk25,
+.mk25 .collapse-section,
+.mk25 .collapse-section[data-dashboard-details-key="comparison"],
+.mk25 .comparison-preselection,
+.mk25 .preselection-grid,
 .mk25 .table-wrap,
-.mk25 .table-wrap.matrix-wrap,
-.mk25 .collapse-section > .table-wrap {
+.mk25 .matrix-wrap {
+  min-width: 0;
+}
+.mk25 .collapse-section > .table-wrap,
+.mk25 .table-wrap.matrix-wrap {
+  box-sizing: border-box;
+  display: block;
+  width: calc(100% - 32px);
+  max-width: calc(100% - 32px);
+  margin-left: 16px;
+  margin-right: 16px;
   overflow-x: auto;
-  max-width: 100%;
+  overflow-y: hidden;
+}
+.mk25 #matrixTable {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  table-layout: fixed;
+}
+.mk25 #matrixTable th,
+.mk25 #matrixTable td {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .mk25 .collapse-section,
 .mk25 .collapse-section[data-dashboard-details-key="comparison"] {
   max-width: 100%;
   min-width: 0;
+  overflow: hidden;
 }
 .mk25 a { color: #fdba74; }
 .mk25 button, .mk25 select {
