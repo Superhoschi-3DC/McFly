@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0b1f3a">
   <title>Pelikan — Superhoschi@3DC</title>
   <meta name="description" content="Pelikan, 30 HTML-Dateien. Prompt: animated svg of a pelican riding a bicycle in a single html file.">
-  <link rel="stylesheet" href="site.css?v=11">
+  <link rel="stylesheet" href="site.css?v=13">
 </head>
 <body class="pelikan-page">
   <a class="skip" href="#inhalt">Zum Inhalt</a>
@@ -15,15 +15,17 @@
       <ul>
         <li><a href="index.html">Start</a></li>
         <li><a href="pelikan.html" aria-current="page">Pelikan</a></li>
-        <li><a href="mmlu.html">MMLU</a></li>
-        <li><a href="mk25.html">McFly Benchmark Mk 2.5</a></li>
+        <li hidden><a href="mmlu.html">MMLU</a></li>
+        <li hidden><a href="mk25.html">McFly Benchmark Mk 2.5</a></li>
       </ul>
     </nav>
     <main id="inhalt" class="stage">
       <article class="card">
-        <p class="eyebrow">Superhoschi@3DC</p>
         <h1>Pelikan</h1>
-        <p class="label" id="prompt-label">Prompt, genau</p>
+        <div class="prompt-heading">
+          <p class="label" id="prompt-label">Prompt:</p>
+          <p class="prompt-credit">thx @ aufkrawall</p>
+        </div>
         <div class="prompt-block">
           <pre><code id="prompt-text" lang="en" translate="no" spellcheck="false">animated svg of a pelican riding a bicycle in a single html file</code></pre>
           <div class="prompt-actions">

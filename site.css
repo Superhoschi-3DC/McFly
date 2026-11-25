@@ -142,6 +142,7 @@ a {
 }
 
 .card {
+  min-width: 0;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 42%),
     var(--card);
@@ -153,16 +154,23 @@ a {
 
 .entries {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 0.8rem;
   margin: 0;
+  width: 100%;
+}
+
+.entry[hidden],
+.rail li[hidden] {
+  display: none !important;
 }
 
 .entry {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 8.5rem;
+  justify-content: flex-start;
+  gap: 0.25rem;
+  min-height: 0;
   padding: 1.05rem 2.15rem 1.05rem 1.05rem;
   border: 1px solid var(--line);
   border-radius: 1rem;
@@ -261,35 +269,78 @@ p {
 }
 
 .label {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.4rem;
   font-size: 0.95rem;
 }
 
+.prompt-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.prompt-heading .label,
+.prompt-credit {
+  margin: 0 0 0.4rem;
+}
+
+.prompt-credit {
+  color: var(--muted);
+  font-size: 0.95rem;
+  text-align: right;
+}
+
+.status:empty {
+  display: none;
+  margin: 0;
+}
+
 .prompt-block {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   background: var(--card-2);
   border: 1px solid var(--line);
-  border-radius: 0.9rem;
-  padding: 0.95rem 1rem 0.8rem;
+  border-radius: 0.75rem;
+  padding: 0.22rem 0.22rem 0.22rem 0.7rem;
 }
 
 .prompt-block pre {
+  flex: 1 1 0;
+  min-width: 0;
   margin: 0;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.prompt-block pre::-webkit-scrollbar {
+  display: none;
 }
 
 .prompt-block code {
   font-family: var(--mono);
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.25;
   color: var(--ink);
   user-select: all;
 }
 
 .prompt-actions {
   display: flex;
+  flex: 0 0 auto;
   justify-content: flex-end;
-  margin-top: 0.85rem;
+  margin: 0;
+}
+
+.prompt-block .copy {
+  min-height: 2rem;
+  padding: 0.22rem 0.8rem;
+  white-space: nowrap;
 }
 
 button {
@@ -492,10 +543,18 @@ th {
   .shell {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     row-gap: 1rem;
     width: min(42rem, calc(100% - 1.75rem));
+    min-width: 0;
+    max-width: 100%;
     padding-top: 1rem;
     padding-bottom: 1.5rem;
+  }
+
+  .stage {
+    width: 100%;
+    max-width: 100%;
   }
 
   .entries {
@@ -541,12 +600,16 @@ th {
 }
 
 @media (max-width: 24rem) {
-  .prompt-actions {
-    justify-content: stretch;
+  .prompt-block {
+    flex-wrap: nowrap;
   }
 
-  .copy {
-    width: 100%;
+  .prompt-actions {
+    justify-content: flex-end;
+  }
+
+  .prompt-block .copy {
+    width: auto;
   }
 
   th,
@@ -603,6 +666,13 @@ body.pelikan-page .shell {
 
 body.pelikan-page .card {
   width: 100%;
+}
+
+body.pelikan-page .stage,
+body.pelikan-page .pelikan-toolbar,
+body.pelikan-page .pelikan-board {
+  min-width: 0;
+  max-width: 100%;
 }
 
 body.pelikan-page .pelikan-toolbar {
@@ -672,19 +742,21 @@ body.pelikan-page .pelikan-vendor-break {
 }
 
 body.pelikan-page .pelikan-row {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.9rem;
   align-items: stretch;
   width: 100%;
+  min-width: 0;
 }
 
 body.pelikan-page .pelikan-item {
   display: flex;
   flex-direction: column;
-  flex: 1 1 18rem;
-  max-width: 26rem;
-  min-width: 16rem;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  height: 100%;
   margin: 0;
   padding: 0.85rem 0.85rem 0.9rem;
   background: var(--card);
@@ -762,9 +834,12 @@ body.pelikan-page .pelikan-fs-close:hover {
 
 body.pelikan-page .pelikan-preview-wrap {
   position: relative;
+  flex: 0 0 auto;
   width: 100%;
+  height: auto;
   aspect-ratio: 3 / 2;
-  min-height: 11rem;
+  min-height: 0;
+  max-height: none;
   margin-top: auto;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -900,8 +975,25 @@ body.pelikan-page .pelikan-fs-frame {
   }
 
   body.pelikan-page .pelikan-item {
-    flex-basis: 100%;
     max-width: none;
     min-width: 0;
+  }
+}
+
+@media (max-width: 75rem) {
+  body.pelikan-page .pelikan-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 58rem) {
+  body.pelikan-page .pelikan-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 40rem) {
+  body.pelikan-page .pelikan-row {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
