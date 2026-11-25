@@ -427,7 +427,7 @@
     }
     .mk25 .collapse-section {
       margin: 18px 0;
-      overflow: hidden;
+      overflow: clip;
       background: rgba(17,24,39,.9);
       border: 1px solid var(--line);
       border-radius: 16px;
@@ -482,7 +482,7 @@
       border: 1px solid var(--line);
       background: rgba(17,24,39,.9);
     }
-    .mk25 .collapse-section[data-dashboard-details-key="comparison"] { overflow: hidden; }
+    .mk25 .collapse-section[data-dashboard-details-key="comparison"] { overflow: clip; }
     .mk25 .matrix-wrap table {
       overflow: visible;
       border: 0;
@@ -593,7 +593,50 @@ body.mk25-page .card,
 .mk25 .collapse-section[data-dashboard-details-key="comparison"] {
   max-width: 100%;
   min-width: 0;
+  overflow: clip;
+}
+.mk25 .matrix-select-bar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  box-sizing: border-box;
+  width: calc(100% - 32px);
+  max-width: calc(100% - 32px);
+  margin: 0 16px;
   overflow: hidden;
+  background: #102848;
+  border: 1px solid rgba(214, 226, 242, 0.16);
+  border-bottom: 2px solid #f97316;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 10px 18px rgba(5, 16, 36, 0.45);
+}
+.mk25 .matrix-select-shift {
+  display: grid;
+  align-items: stretch;
+  width: max-content;
+  min-width: 100%;
+}
+.mk25 .matrix-select-label,
+.mk25 .matrix-select-cell {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 8px 10px;
+  background: #102848;
+  color: #f4f7fb;
+}
+.mk25 .matrix-select-label {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.mk25 .matrix-select-cell select {
+  width: 100%;
+  min-width: 0;
+  min-height: 32px;
+}
+.mk25 .table-wrap.matrix-wrap {
+  border-radius: 0 0 12px 12px;
 }
 .mk25 a { color: #fdba74; }
 .mk25 button, .mk25 select {

@@ -810,7 +810,6 @@ async function startMk25() {
         return `<th class="model-detail-cell">${modelDetailCardHtml(option)}</th>`;
       }).join('');
       const headerRows = `
-        <tr><th class="matrix-corner-label">Auswahl</th>${columnKeys.map((key, index) => `<th class="model-select-cell">${compareSelectHtml(key, index)}</th>`).join('')}</tr>
         <tr><th>Modell</th>${columnKeys.map(key => {
           if (!key) return `<th><span class="muted">Kein Modell ausgewaehlt.</span></th>`;
           const option = options[key] || {};
@@ -1075,22 +1074,48 @@ async function startMk25() {
       const fittedColumns = columnKeys.filter(Boolean).length || columnKeys.length;
       matrixTable.style.width = '100%';
       matrixTable.style.minWidth = `${168 + fittedColumns * 160}px`;
+      const matrixSelectShift = document.getElementById('matrixSelectShift');
+      if (matrixSelectShift) {
+        matrixSelectShift.innerHTML = `<div class="matrix-select-label">Auswahl</div>${columnKeys.map((key, index) => `<div class="matrix-select-cell">${compareSelectHtml(key, index)}</div>`).join('')}`;
+      }
       const matrixWrap = document.getElementById('matrixWrap');
-      const matrixHead = document.querySelector('#matrixTable thead');
       matrixHeaderResizeObserver?.disconnect();
-      if (matrixWrap && matrixHead) {
-        const updateStickyOffsets = () => {
-          let stickyTop = 0;
-          // Only selection and model metadata stay pinned, never expanded details.
-          [...matrixHead.rows].slice(0, 2).forEach(row => {
-            [...row.cells].forEach(cell => { cell.style.top = `${stickyTop}px`; });
-            stickyTop += row.getBoundingClientRect().height;
-          });
-          matrixWrap.style.setProperty('--matrix-head-height', `${stickyTop}px`);
+      if (matrixWrap) {
+        const syncMatrixSelectBar = () => {
+          const bar = document.getElementById('matrixSelectBar');
+          const shift = document.getElementById('matrixSelectShift');
+          const modelRow = matrixTable.querySelector('thead tr');
+          if (!bar || !shift || !modelRow?.cells?.length) return;
+          const widths = [...modelRow.cells].map(cell => cell.getBoundingClientRect().width);
+          shift.style.gridTemplateColumns = widths.map(width => `${width}px`).join(' ');
+          shift.style.width = `${widths.reduce((sum, width) => sum + width, 0)}px`;
+          const barContentLeft = bar.getBoundingClientRect().left + bar.clientLeft;
+          shift.style.transform = `translateX(${modelRow.cells[0].getBoundingClientRect().left - barContentLeft}px)`;
+          const rail = document.querySelector('.rail');
+          let top = 0;
+          if (rail) {
+            const railBox = rail.getBoundingClientRect();
+            const barBox = bar.getBoundingClientRect();
+            const overlaps = railBox.right > barBox.left + 4 && railBox.left < barBox.right - 4;
+            if (overlaps && railBox.bottom > 0 && railBox.top < window.innerHeight / 2) top = railBox.bottom + 8;
+          }
+          bar.style.top = `${top}px`;
         };
-        updateStickyOffsets();
-        matrixHeaderResizeObserver = new ResizeObserver(updateStickyOffsets);
-        [...matrixHead.rows].slice(0, 2).forEach(row => matrixHeaderResizeObserver.observe(row));
+        matrixHeaderResizeObserver = new ResizeObserver(syncMatrixSelectBar);
+        matrixHeaderResizeObserver.observe(matrixWrap);
+        matrixHeaderResizeObserver.observe(matrixTable);
+        if (!matrixWrap.dataset.selectSync) {
+          matrixWrap.dataset.selectSync = '1';
+          matrixWrap.addEventListener('scroll', syncMatrixSelectBar, { passive: true });
+          window.addEventListener('resize', syncMatrixSelectBar);
+          window.addEventListener('scroll', syncMatrixSelectBar, { passive: true });
+          document.getElementById('matrixSelectBar')?.addEventListener('wheel', (event) => {
+            if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+            matrixWrap.scrollLeft += event.deltaX;
+            event.preventDefault();
+          }, { passive: false });
+        }
+        requestAnimationFrame(syncMatrixSelectBar);
       }
       bindCompareSelects();
       document.querySelectorAll('[data-matrix-group-toggle]').forEach(button => {
