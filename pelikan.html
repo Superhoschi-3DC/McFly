@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f3f4f6">
+  <meta name="theme-color" content="#07080a">
   <title>Pelikan — Superhoschi@3DC</title>
   <meta name="description" content="Pelikan, Stand 25.11.2026. Eine HTML-Datei. Ergebnisse sind noch nicht veröffentlicht.">
   <link rel="stylesheet" href="site.css">
 </head>
 <body>
   <a class="skip" href="#inhalt">Zum Inhalt</a>
-  <div class="layout">
-    <nav class="tree" aria-label="Seiten">
+  <div class="shell">
+    <nav class="rail" aria-label="Seiten">
+      <p class="rail-label">Seiten</p>
       <ul>
         <li><a href="index.html">Start</a></li>
         <li><a href="pelikan.html" aria-current="page">Pelikan</a></li>
@@ -19,14 +20,12 @@
         <li><a href="mk25.html">McFly Benchmark Mk 2.5</a></li>
       </ul>
     </nav>
-    <div class="wrap">
-      <header class="site-header">
+    <main id="inhalt" class="stage">
+      <article class="card">
         <p class="eyebrow">Superhoschi@3DC</p>
         <h1>Pelikan</h1>
-        <p class="stand">Stand 25.11.2026</p>
-      </header>
+        <p class="lead">Stand 25.11.2026</p>
 
-      <main id="inhalt">
         <section aria-labelledby="aufgabe-title">
           <h2 id="aufgabe-title">Aufgabe</h2>
           <p>Die Aufgabe ist eine HTML-Datei. Ältere Dateien bleiben.</p>
@@ -95,13 +94,8 @@
             </table>
           </div>
         </section>
-      </main>
-
-      <footer>
-        <p>Pelikan · Superhoschi@3DC</p>
-        <p>GitHub-Organisation Superhoschi-3DC</p>
-      </footer>
-    </div>
+      </article>
+    </main>
   </div>
   <script src="site.js"></script>
 </body>
