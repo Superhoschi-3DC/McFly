@@ -5,26 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1f3a">
   <title>McFly Benchmark Mk 2.5 — Superhoschi@3DC</title>
-  <meta name="description" content="McFly Benchmark Mk 2.5 ist noch nicht fertig.">
-  <link rel="stylesheet" href="site.css?v=13">
+  <meta name="description" content="McFly Benchmark Mk 2.5: 47 Modellprofile, 12 Kategorien, 470 Läufe und 5731 Fälle.">
+  <link rel="stylesheet" href="site.css?v=14">
+  <link rel="stylesheet" href="mk25/mk25.css?v=14">
 </head>
-<body>
+<body class="mk25-page">
   <a class="skip" href="#inhalt">Zum Inhalt</a>
-  <div class="shell">
+  <div class="shell shell-wide">
     <nav class="rail" aria-label="Seiten">
       <ul>
         <li><a href="index.html">Start</a></li>
         <li><a href="pelikan.html">Pelikan</a></li>
         <li hidden><a href="mmlu.html">MMLU</a></li>
-        <li hidden><a href="mk25.html" aria-current="page">McFly Benchmark Mk 2.5</a></li>
+        <li><a href="mk25.html" aria-current="page">McFly Benchmark Mk 2.5</a></li>
       </ul>
     </nav>
     <main id="inhalt" class="stage">
       <article class="card">
         <h1>McFly Benchmark Mk 2.5</h1>
-        <p class="lead">Diese Seite ist noch nicht fertig.</p>
+        <p class="lead">47 Modellprofile, 12 Kategorien, 470 Läufe und 5731 Fälle.</p>
       </article>
+  <div class="mk25">
+    <details class="collapse-section" data-dashboard-details-key="comparison" open>
+      <summary>LLM Vergleichstabelle</summary>
+      <details class="comparison-preselection" id="comparisonPreselection" data-dashboard-details-key="preselection" open>
+        <summary class="matrix-group-toggle"><span class="matrix-group-icon" aria-hidden="true"></span>Vorauswahl</summary>
+        <div class="preselection-grid">
+          <div class="comparison-preselection-tools">
+            <div class="preselection-tool-group" role="group" aria-labelledby="preselectionDisplayTitle">
+              <h3 id="preselectionDisplayTitle">Darstellung</h3>
+            <label>Sortierung
+              <select id="comparisonSort" aria-label="Sortierung der Vergleichsmodelle">
+                <option value="release">Veröffentlichungsdatum</option>
+                <option value="ram">RAM Klasse</option>
+                <option value="quality">Qualität</option>
+                <option value="value">Qualität/Zeit</option>
+                <option value="incomplete">Unvollständig</option>
+              </select>
+            </label>
+            <label class="comparison-column-count">Vergleichsspalten
+              <select id="comparisonColumnCount" aria-label="Anzahl der Vergleichsspalten">
+                <option value="auto">Automatisch</option>
+                <option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                <option value="5">5</option><option value="6">6</option><option value="7">7</option>
+                <option value="8">8</option><option value="9">9</option><option value="10">10</option>
+                <option value="11">11</option><option value="12">12</option><option value="13">13</option>
+                <option value="14">14</option><option value="15">15</option><option value="16">16</option>
+                <option value="17">17</option><option value="18">18</option><option value="19">19</option>
+                <option value="20">20</option>
+              </select>
+            </label>
+            </div>
+            <div class="preselection-tool-group" role="group" aria-labelledby="preselectionSelectionTitle">
+              <h3 id="preselectionSelectionTitle">Auswahl</h3>
+              <span class="comparison-match-count" id="comparisonMatchCount" role="status" aria-live="polite" aria-atomic="true"></span>
+              <button type="button" id="comparisonReset">Auswahl zuruecksetzen</button>
+            </div>
+          </div>
+          <div class="preselection-options" id="comparisonPreselectionContent"></div>
+        </div>
+      </details>
+      <div class="table-wrap matrix-wrap" id="matrixWrap"><table id="matrixTable"></table></div>
+    </details>
+
+    <details class="collapse-section" data-dashboard-details-key="backend" open>
+      <summary>Backend-Vergleich</summary>
+      <div class="table-wrap"><table id="backendSummaryMatrixTable" class="backend-compare"></table></div>
+    </details>
+
+    <details class="collapse-section" data-dashboard-details-key="under50">
+      <summary>Ursachen unter 50%</summary>
+      <div class="table-wrap"><table id="under50Table"></table></div>
+    </details>
+
+    <details class="collapse-section" data-dashboard-details-key="latest">
+      <summary>Aktueller Stand je Kategorie und Modell</summary>
+      <div class="table-wrap"><table id="latestTable"></table></div>
+    </details>
+
+    <details class="collapse-section" data-dashboard-details-key="runs">
+      <summary>Alle ausgewerteten Laeufe</summary>
+      <div class="table-wrap"><table id="runsTable"></table></div>
+    </details>
+
+    <details class="collapse-section" data-dashboard-details-key="failures">
+      <summary>Offene oder auffaellige Faelle aus den neuesten Laeufen</summary>
+      <div class="table-wrap"><table id="failureTable"></table></div>
+    </details>
+  </div>
+
+  <dialog class="summary-info-dialog" id="summaryInfoDialog" aria-labelledby="summaryInfoTitle">
+    <h2 id="summaryInfoTitle"></h2>
+    <p id="summaryInfoText"></p>
+    <form method="dialog"><button type="submit">Schließen</button></form>
+  </dialog>
+
+
     </main>
   </div>
+  <script src="mk25/mk25.js?v=14"></script>
 </body>
 </html>

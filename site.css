@@ -658,10 +658,22 @@ body.pelikan-page {
   overflow-x: clip;
 }
 
-body.pelikan-page .shell {
+body.pelikan-page .shell,
+body.mk25-page .shell {
   grid-template-columns: max-content minmax(0, 1fr);
   width: min(100rem, calc(100% - 2.25rem));
   align-items: start;
+}
+
+body.mk25-page {
+  overflow-x: clip;
+}
+
+body.mk25-page .card,
+body.mk25-page .stage {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 body.pelikan-page .card {
