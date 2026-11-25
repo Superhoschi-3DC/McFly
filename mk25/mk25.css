@@ -477,24 +477,27 @@
     .mk25 .table-wrap { overflow-x: auto; border-radius: 12px; }
     .mk25 .matrix-wrap {
       max-height: none;
-      overflow-x: auto;
+      overflow-x: hidden;
       overflow-y: hidden;
       border: 1px solid var(--line);
       background: rgba(17,24,39,.9);
     }
     .mk25 .collapse-section[data-dashboard-details-key="comparison"] { overflow: clip; }
     .mk25 .matrix-wrap table {
-      overflow: visible;
+      overflow: hidden;
       border: 0;
-      border-collapse: separate;
+      border-collapse: collapse;
       border-radius: 0;
       border-spacing: 0;
       table-layout: fixed;
       width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
     .mk25 .matrix-wrap .model-select-cell select { min-width: 0; }
     .mk25 .matrix-wrap th:first-child, .mk25 .matrix-wrap td:first-child {
-      width: 150px;
+      width: auto;
+      max-width: 150px;
     }
     .mk25 #matrixTable thead tr:first-child th.matrix-corner-label {
       font-weight: 700;
@@ -516,7 +519,7 @@
       box-shadow: 0 1px 0 var(--line);
     }
     .mk25 .matrix-detail-row.details-collapsed { display: none; }
-    .mk25 .table-wrap.matrix-wrap { overflow-x: auto; overflow-y: hidden; }
+    .mk25 .table-wrap.matrix-wrap { overflow-x: hidden; overflow-y: hidden; }
     @media print {
       .mk25 #matrixTable thead { display: table-header-group; }
       .mk25 #matrixTable thead tr:nth-child(-n+2) th { padding-top: 2px; padding-bottom: 2px; }
@@ -566,6 +569,7 @@ body.mk25-page .card,
 .mk25 .table-wrap,
 .mk25 .matrix-wrap {
   min-width: 0;
+  overflow-x: clip;
 }
 .mk25 .collapse-section > .table-wrap,
 .mk25 .table-wrap.matrix-wrap {
@@ -575,19 +579,24 @@ body.mk25-page .card,
   max-width: calc(100% - 32px);
   margin-left: 16px;
   margin-right: 16px;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
 }
 .mk25 #matrixTable {
   box-sizing: border-box;
   width: 100%;
-  max-width: none;
+  max-width: 100%;
+  min-width: 0;
   table-layout: fixed;
 }
 .mk25 #matrixTable th,
 .mk25 #matrixTable td {
   min-width: 0;
+  max-width: 0;
   overflow-wrap: anywhere;
+  white-space: normal;
+  word-break: normal;
+  box-sizing: border-box;
 }
 .mk25 .collapse-section,
 .mk25 .collapse-section[data-dashboard-details-key="comparison"] {
@@ -613,8 +622,10 @@ body.mk25-page .card,
 .mk25 .matrix-select-shift {
   display: grid;
   align-items: stretch;
-  width: max-content;
-  min-width: 100%;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  transform: none;
 }
 .mk25 .matrix-select-label,
 .mk25 .matrix-select-cell {
@@ -633,7 +644,16 @@ body.mk25-page .card,
 .mk25 .matrix-select-cell select {
   width: 100%;
   min-width: 0;
+  max-width: 100%;
   min-height: 32px;
+  white-space: normal;
+}
+.mk25 #matrixTable .model-header-meta,
+.mk25 #matrixTable .model-header-line,
+.mk25 #matrixTable .model-release,
+.mk25 #matrixTable .matrix-goals,
+.mk25 #matrixTable .matrix-badges {
+  overflow-wrap: anywhere;
 }
 .mk25 .table-wrap.matrix-wrap {
   border-radius: 0 0 12px 12px;

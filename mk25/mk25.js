@@ -1067,13 +1067,22 @@ async function startMk25() {
         .forEach(row => rows.push(`<tr>${categoryRowHtml(row)}</tr>`));
 
       const matrixTable = document.getElementById('matrixTable');
+      const fittedColumns = columnKeys.length || 1;
+      const matrixColumnLabelShare = (columnCount = fittedColumns) => {
+        const narrow = window.innerWidth <= 480;
+        if (columnCount >= 8) return narrow ? 10 : 14;
+        return narrow ? 12 : 16;
+      };
+      const colgroup = `<colgroup><col class="matrix-corner-col">${columnKeys.map(() => `<col class="matrix-data-col">`).join('')}</colgroup>`;
+      matrixTable.style.width = '100%';
+      matrixTable.style.minWidth = '0';
+      matrixTable.style.maxWidth = '100%';
+      matrixTable.style.setProperty('--matrix-cols', String(fittedColumns));
       matrixTable.innerHTML = `
+        ${colgroup}
         <thead>${headerRows}</thead>
         <tbody>${rows.join('')}</tbody>
       `;
-      const fittedColumns = columnKeys.filter(Boolean).length || columnKeys.length;
-      matrixTable.style.width = '100%';
-      matrixTable.style.minWidth = `${168 + fittedColumns * 160}px`;
       const matrixSelectShift = document.getElementById('matrixSelectShift');
       if (matrixSelectShift) {
         matrixSelectShift.innerHTML = `<div class="matrix-select-label">Auswahl</div>${columnKeys.map((key, index) => `<div class="matrix-select-cell">${compareSelectHtml(key, index)}</div>`).join('')}`;
@@ -1084,13 +1093,30 @@ async function startMk25() {
         const syncMatrixSelectBar = () => {
           const bar = document.getElementById('matrixSelectBar');
           const shift = document.getElementById('matrixSelectShift');
-          const modelRow = matrixTable.querySelector('thead tr');
-          if (!bar || !shift || !modelRow?.cells?.length) return;
-          const widths = [...modelRow.cells].map(cell => cell.getBoundingClientRect().width);
-          shift.style.gridTemplateColumns = widths.map(width => `${width}px`).join(' ');
-          shift.style.width = `${widths.reduce((sum, width) => sum + width, 0)}px`;
-          const barContentLeft = bar.getBoundingClientRect().left + bar.clientLeft;
-          shift.style.transform = `translateX(${modelRow.cells[0].getBoundingClientRect().left - barContentLeft}px)`;
+          if (!bar || !shift) return;
+          const cols = Number(matrixTable.style.getPropertyValue('--matrix-cols')) || columnKeys.length || 1;
+          const hostWidth = matrixWrap.clientWidth || bar.clientWidth;
+          if (!hostWidth) return;
+          const labelShare = matrixColumnLabelShare(cols);
+          let labelWidth = Math.round(hostWidth * (labelShare / 100));
+          let remain = hostWidth - labelWidth;
+          let dataWidth = Math.floor(remain / cols);
+          const dataWidths = Array.from({ length: cols }, (_, index) => {
+            if (index === cols - 1) return Math.max(0, remain - dataWidth * (cols - 1));
+            return dataWidth;
+          });
+          const colElements = matrixTable.querySelectorAll('colgroup col');
+          if (colElements[0]) colElements[0].style.width = `${labelWidth}px`;
+          dataWidths.forEach((width, index) => {
+            const col = colElements[index + 1];
+            if (col) col.style.width = `${width}px`;
+          });
+          shift.style.width = '100%';
+          shift.style.minWidth = '0';
+          shift.style.maxWidth = '100%';
+          shift.style.transform = 'none';
+          shift.style.gridTemplateColumns = `${labelWidth}px ${dataWidths.map((width) => `${width}px`).join(' ')}`;
+          matrixWrap.style.setProperty('--matrix-cols', String(cols));
           const rail = document.querySelector('.rail');
           let top = 0;
           if (rail) {
@@ -1104,16 +1130,12 @@ async function startMk25() {
         matrixHeaderResizeObserver = new ResizeObserver(syncMatrixSelectBar);
         matrixHeaderResizeObserver.observe(matrixWrap);
         matrixHeaderResizeObserver.observe(matrixTable);
-        if (!matrixWrap.dataset.selectSync) {
-          matrixWrap.dataset.selectSync = '1';
-          matrixWrap.addEventListener('scroll', syncMatrixSelectBar, { passive: true });
-          window.addEventListener('resize', syncMatrixSelectBar);
-          window.addEventListener('scroll', syncMatrixSelectBar, { passive: true });
-          document.getElementById('matrixSelectBar')?.addEventListener('wheel', (event) => {
-            if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
-            matrixWrap.scrollLeft += event.deltaX;
-            event.preventDefault();
-          }, { passive: false });
+        matrixWrap._matrixSelectSync = syncMatrixSelectBar;
+        if (!matrixWrap._matrixSelectListeners) {
+          matrixWrap._matrixSelectListeners = true;
+          const invokeMatrixSelectSync = () => matrixWrap._matrixSelectSync?.();
+          window.addEventListener('resize', invokeMatrixSelectSync);
+          window.addEventListener('scroll', invokeMatrixSelectSync, { passive: true });
         }
         requestAnimationFrame(syncMatrixSelectBar);
       }
