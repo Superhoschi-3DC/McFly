@@ -749,7 +749,8 @@ body.pelikan-page {
 }
 
 body.pelikan-page .shell,
-body.mk25-page .shell {
+body.mk25-page .shell,
+body.internal-page .shell {
   grid-template-columns: max-content minmax(0, 1fr);
   width: min(100rem, calc(100% - 2.25rem));
   align-items: start;
@@ -760,7 +761,8 @@ body.mk25-page {
 }
 
 body.mk25-page .card,
-body.mk25-page .stage {
+body.mk25-page .stage,
+body.internal-page .stage {
   width: 100%;
   min-width: 0;
   max-width: 100%;
@@ -1086,7 +1088,8 @@ body.pelikan-page .pelikan-fs-frame {
 }
 
 @media (max-width: 52rem) {
-  body.pelikan-page .shell {
+  body.pelikan-page .shell,
+  body.internal-page .shell {
     width: min(42rem, calc(100% - 1.75rem));
   }
 
