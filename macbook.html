@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1f3a">
+  <meta name="mcfly-auth" content="required">
+  <title>MacBook Dashboard — Superhoschi@3DC</title>
+  <meta name="description" content="Angemeldete Hülle. Die Live-Ansicht bleibt auf dem Mac und wird hier nicht veröffentlicht.">
+  <link rel="stylesheet" href="site.css?v=19">
+</head>
+<body>
+  <a class="skip" href="#inhalt">Zum Inhalt</a>
+  <div class="shell">
+    <nav class="rail" aria-label="Seiten">
+      <ul>
+        <li><a href="index.html">Start</a></li>
+        <li><a href="pelikan.html">Pelikan</a></li>
+        <li hidden><a href="mmlu.html">MMLU</a></li>
+        <li><a href="mk25.html">McFly Benchmark Mk 2.5</a></li>
+        <li hidden data-auth="internal"><a href="macbook.html" aria-current="page">MacBook Dashboard</a></li>
+        <li hidden data-auth="internal"><a href="chat.html">McFly Chat System</a></li>
+        <li hidden data-auth="internal"><a href="openclaw.html">Openclaw Betriebsmonitor</a></li>
+        <li data-auth="out"><a href="anmelden.html">Anmelden</a></li>
+        <li hidden data-auth="in"><button type="button" data-auth="logout">Abmelden</button></li>
+      </ul>
+    </nav>
+    <main id="inhalt" class="stage">
+      <p class="lead" data-auth-pending>Anmeldung wird geprüft…</p>
+      <article class="card" data-auth-locked hidden>
+        <h1>MacBook Dashboard</h1>
+        <p>Diese Seite ist erst nach der Anmeldung sichtbar.</p>
+        <p><a class="auth-link" href="anmelden.html?next=macbook.html">Zur Anmeldung</a></p>
+      </article>
+      <article class="card" data-auth-shell hidden>
+        <h1>MacBook Dashboard</h1>
+        <p class="banner">Die Live-Ansicht bleibt auf dem Mac und wird hier nicht veröffentlicht. Auf dieser Seite stehen keine Betriebsdaten.</p>
+      </article>
+      <noscript><p class="banner">Für die Anmeldung muss JavaScript aktiv sein.</p></noscript>
+    </main>
+  </div>
+  <script src="auth.js?v=1"></script>
+  <script data-goatcounter="https://superhoschi.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
