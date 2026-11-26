@@ -1,0 +1,317 @@
+.dash-macbook{
+  color-scheme: dark;
+  --bg: #0b1020;
+  --panel: #111827;
+  --panel-2: #1f2937;
+  --muted: #93a4bf;
+  --text: #e5eefb;
+  --border: #273449;
+  --accent: #4f8cff;
+  --accent-2: #67e8f9;
+  --ok: #22c55e;
+  --warn: #f59e0b;
+  --dead: #ef4444;
+  --paused: #8b5cf6;
+  --unknown: #64748b;
+  --shadow: 0 12px 32px rgba(0,0,0,.35);
+}.dash-macbook *{ box-sizing: border-box; }.dash-macbook{
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, #09101d 0%, #0b1020 100%);
+  color: var(--text);
+}.dash-macbook a{ color: #8ec5ff; }.dash-macbook .page{ max-width: 1280px; margin: 0 auto; padding: 20px; }.dash-macbook .header{ display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px; }.dash-macbook .title h1{ margin: 0; font-size: 1.9rem; }.dash-macbook .title p{ margin: 6px 0 0; color: var(--muted); }.dash-macbook .panel{
+  background: rgba(17,24,39,.9);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}.dash-macbook .kpis{ display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 18px 0 24px; }.dash-macbook .kpi{ padding: 16px; }.dash-macbook .kpi .label{ color: var(--muted); font-size: .9rem; }.dash-macbook .kpi .value{ font-size: 1.8rem; font-weight: 700; margin-top: 10px; }.dash-macbook .toolbar{ display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 18px; }.dash-macbook input[type='search'], .dash-macbook input[type='password']{
+  background: #0f172a;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 10px 12px;
+  min-width: 220px;
+}.dash-macbook button, .dash-macbook .button{
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #172036;
+  color: var(--text);
+  padding: 10px 14px;
+  cursor: pointer;
+}.dash-macbook button:hover, .dash-macbook .button:hover{ border-color: #3b82f6; }.dash-macbook .badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: .82rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}.dash-macbook .badge.ok{ background: rgba(34,197,94,.12); color: #86efac; border-color: rgba(34,197,94,.24); }.dash-macbook .badge.warn{ background: rgba(245,158,11,.12); color: #fcd34d; border-color: rgba(245,158,11,.24); }.dash-macbook .badge.dead{ background: rgba(239,68,68,.12); color: #fca5a5; border-color: rgba(239,68,68,.24); }.dash-macbook .badge.paused{ background: rgba(139,92,246,.12); color: #c4b5fd; border-color: rgba(139,92,246,.24); }.dash-macbook .badge.unknown{ background: rgba(100,116,139,.16); color: #cbd5e1; border-color: rgba(148,163,184,.24); }.dash-macbook .grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }.dash-macbook .card{ padding: 16px; }.dash-macbook .card h3{ margin: 0; font-size: 1.05rem; }.dash-macbook .card .sub{ color: var(--muted); font-size: .92rem; margin-top: 6px; }.dash-macbook .meta{ display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 14px; }.dash-macbook .meta-block{ background: rgba(15,23,42,.7); border: 1px solid rgba(39,52,73,.8); border-radius: 12px; padding: 10px; }.dash-macbook .meta-block .k{ color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }.dash-macbook .meta-block .v{ margin-top: 6px; font-size: .92rem; word-break: break-word; }.dash-macbook .list{ margin: 12px 0 0; padding-left: 18px; color: #d6e2f3; }.dash-macbook .section{ margin: 30px 0 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }.dash-macbook .section h2{ margin: 0; font-size: 1.25rem; }.dash-macbook .muted{ color: var(--muted); }.dash-macbook .notice{ padding: 14px 16px; margin: 14px 0; }.dash-macbook .login-wrap{ min-height: 100vh; display: grid; place-items: center; padding: 20px; }.dash-macbook .login-card{ width: min(420px, 100%); padding: 24px; }.dash-macbook .login-card h1{ margin-top: 0; }.dash-macbook .error{ color: #fca5a5; }.dash-macbook .footer{ margin: 30px 0 10px; color: var(--muted); font-size: .9rem; }.dash-macbook .critical-table-wrapper{
+  overflow-x: auto;
+  border-radius: 16px;
+  background: rgba(17,24,39,.9);
+  border: 1px solid var(--border);
+}.dash-macbook .critical-table{
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}.dash-macbook .critical-table th, .dash-macbook .critical-table td{
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: middle;
+}.dash-macbook .critical-table th{
+  color: var(--muted);
+  font-size: .82rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  background: rgba(15,23,42,.5);
+}.dash-macbook .critical-table td{ font-size: .92rem; }
+@media (max-width: 720px) {.dash-macbook .page{ padding: 14px; }.dash-macbook .header{ align-items: flex-start; }.dash-macbook .title h1{ font-size: 1.5rem; }
+}.dash-macbook .page{ max-width: 1280px; margin: 0 auto; padding: 20px; }.dash-macbook .page.page-wide{ max-width: none; width: 100%; min-width: 0; }.dash-macbook .page > nav.dashboard-topnav, .dash-macbook main.page > nav.dashboard-topnav{
+  display: block;
+  margin: 0 0 18px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+  font-size: .95rem;
+  line-height: 1.45;
+}.dash-macbook .page > nav.dashboard-topnav a, .dash-macbook main.page > nav.dashboard-topnav a{
+  text-decoration: none;
+}.dash-macbook .page > nav.dashboard-topnav a:hover, .dash-macbook main.page > nav.dashboard-topnav a:hover{
+  color: var(--accent-2);
+}.dash-macbook a.button, .dash-macbook a.icon-button{ text-decoration: none; }.dash-macbook button, .dash-macbook .button{
+  font-weight: 600;
+  line-height: 1.25;
+}.dash-macbook .dashboard-fold{
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 18px 0;
+  background: var(--panel);
+}.dash-macbook .dashboard-fold > summary{
+  cursor: pointer;
+  padding: 4px 0;
+}.dash-macbook .dashboard-fold > summary:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}.dash-macbook .dashboard-fold > summary > h2{ display: inline; }
+@media (max-width: 720px) {.dash-macbook .page{ padding: 14px; }
+}.dash-macbook .gauge-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}.dash-macbook .gauge-groups{
+  display: grid;
+  gap: 16px;
+  margin: 18px 0 26px;
+}.dash-macbook .alerts-group{
+  margin: 18px 0 16px;
+}.dash-macbook .dashboard-group{
+  overflow: hidden;
+}.dash-macbook .dashboard-group-summary{
+  display: list-item;
+  padding: 16px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+}.dash-macbook .dashboard-group-summary .sub{
+  margin-left: 10px;
+  color: var(--muted);
+  font-size: .86rem;
+  font-weight: 400;
+}.dash-macbook .dashboard-group-content{
+  padding: 0 16px 16px;
+}.dash-macbook .macbook-info-group .meta{
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}.dash-macbook .macbook-info-group .meta-block .v > div + div{
+  margin-top: 4px;
+}.dash-macbook .header-nav{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  justify-content: flex-end;
+}.dash-macbook .header-nav a{
+  font-size: .86rem;
+  font-weight: 700;
+  text-decoration: none;
+}.dash-macbook .overall-status{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+@media (min-width: 1100px) {.dash-macbook .gauge-group.storage .gauge-grid, .dash-macbook .gauge-group.components .gauge-grid{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1200px) {.dash-macbook .gauge-group.temperatures .gauge-grid{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}.dash-macbook .gauge-card{
+  padding: 14px;
+}.dash-macbook .gauge-wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6px;
+}.dash-macbook .gauge-svg{
+  width: 100%;
+  max-width: 230px;
+  height: auto;
+}.dash-macbook .gauge-sparkline{ width: 100%; max-width: 200px; display: block; margin: 6px auto 0; opacity: .85; }.dash-macbook .gauge-label{
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 4px;
+}.dash-macbook .gauge-sub{
+  text-align: center;
+  color: var(--muted);
+  font-size: .86rem;
+  margin-top: 4px;
+}.dash-macbook .gauge-value{
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-top: -6px;
+}.dash-macbook .gauge-scale{
+  text-align: center;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 4px;
+}.dash-macbook .gauge-history{
+  min-height: 1.2em;
+  text-align: center;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 700;
+  margin-top: 5px;
+}.dash-macbook .swap-activity{ white-space: nowrap; font-size: clamp(.66rem, 1.1vw, .78rem); font-variant-numeric: tabular-nums; }.dash-macbook .gauge-chip-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}.dash-macbook .info-wrap{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+}.dash-macbook .info-tip{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(147, 164, 191, .7);
+  color: var(--muted);
+  background: rgba(15, 23, 42, .55);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .78rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: help;
+  user-select: none;
+}.dash-macbook .info-tip:focus-visible{
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}.dash-macbook .tooltip-panel{
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 20;
+  min-width: 190px;
+  max-width: 260px;
+  padding: 10px 12px;
+  border: 1px solid rgba(147, 164, 191, .35);
+  border-radius: 8px;
+  background: rgba(15, 23, 42, .98);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .35);
+  color: #e5eefb;
+  font-size: .78rem;
+  line-height: 1.35;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity .12s ease, transform .12s ease;
+}.dash-macbook .tooltip-panel div + div{
+  margin-top: 3px;
+}.dash-macbook .info-wrap:hover .tooltip-panel, .dash-macbook .info-wrap:focus-within .tooltip-panel{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}.dash-macbook{
+  background: linear-gradient(180deg, #09101d 0%, #0b1020 100%);
+  color: var(--text);
+}.dash-macbook > .page, .dash-macbook > main.page, .dash-macbook .login-wrap{
+  max-width: none;
+  width: 100%;
+  min-width: 0;
+}.dash-macbook > .page, .dash-macbook > main.page{
+  padding: 20px;
+}.dash-macbook a{ color: #8ec5ff; }.dash-macbook nav.dashboard-topnav{
+  display: block;
+  margin: 0 0 18px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: .95rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}.dash-macbook nav.dashboard-topnav a{ text-decoration: none; }.dash-macbook nav.dashboard-topnav a:hover{ color: var(--accent-2); }.dash-macbook .page > .header, .dash-macbook main.page > .header, .dash-macbook .page > .hub-header, .dash-macbook .energy-header{
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}.dash-macbook .page .title h1, .dash-macbook main.page .title h1, .dash-macbook .page .header .title h1, .dash-macbook .energy-header h1, .dash-macbook .login-card h1{
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}.dash-macbook .page .title p, .dash-macbook main.page .title p, .dash-macbook .energy-header > div > p.muted{
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: .9rem;
+}.dash-macbook .page h2, .dash-macbook main.page h2, .dash-macbook .section h2, .dash-macbook .category-section h2{
+  margin: 28px 0 10px;
+  font-size: 18px;
+  font-weight: 700;
+}.dash-macbook button, .dash-macbook .button, .dash-macbook input[type='submit']{
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #172036;
+  color: var(--text);
+  padding: 10px 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  cursor: pointer;
+}.dash-macbook button:hover, .dash-macbook .button:hover{
+  border-color: #3b82f6;
+}.dash-macbook .panel:not(.login-card){
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: none;
+}.dash-macbook .dashboard-group, .dash-macbook details.zone, .dash-macbook .zone, .dash-macbook .dashboard-fold, .dash-macbook details.role-dashboard-area{
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: none;
+}.dash-macbook .eyebrow{
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: .9rem;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+@media (max-width: 720px) {.dash-macbook > .page, .dash-macbook > main.page{ padding: 14px; }.dash-macbook .page .title h1, .dash-macbook main.page .title h1, .dash-macbook .energy-header h1{ font-size: 1.5rem; }
+}
+
+.dash-macbook{min-width:0}

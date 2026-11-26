@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0b1f3a">
   <title>Start — Superhoschi@3DC</title>
   <meta name="description" content="Inhalte mittels Cursor und OpenClaw-Agenten McFly erstellt.">
-  <link rel="stylesheet" href="site.css?v=17">
+  <link rel="stylesheet" href="site.css?v=20">
 </head>
 <body>
   <a class="skip" href="#inhalt">Zum Inhalt</a>
@@ -17,6 +17,11 @@
         <li><a href="pelikan.html">Pelikan</a></li>
         <li hidden><a href="mmlu.html">MMLU</a></li>
         <li><a href="mk25.html">McFly Benchmark Mk 2.5</a></li>
+        <li hidden data-auth="internal"><a href="macbook.html">MacBook Dashboard</a></li>
+        <li hidden data-auth="internal"><a href="chat.html">McFly Chat System</a></li>
+        <li hidden data-auth="internal"><a href="openclaw.html">Openclaw Betriebsmonitor</a></li>
+        <li data-auth="out"><a href="anmelden.html">Anmelden</a></li>
+        <li hidden data-auth="in"><button type="button" data-auth="logout">Abmelden</button></li>
       </ul>
     </nav>
     <main id="inhalt" class="stage">
@@ -41,6 +46,7 @@
       </div>
     </main>
   </div>
+  <script src="auth.js?v=1"></script>
   <script data-goatcounter="https://superhoschi.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

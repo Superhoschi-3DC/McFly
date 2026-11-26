@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>Anmelden — Superhoschi@3DC</title>
+  <meta name="description" content="Anmeldung für die internen Seiten.">
+  <link rel="stylesheet" href="site.css?v=20">
+</head>
+<body>
+  <a class="skip" href="#inhalt">Zum Inhalt</a>
+  <div class="shell">
+    <nav class="rail" aria-label="Seiten">
+      <ul>
+        <li><a href="index.html">Start</a></li>
+        <li><a href="pelikan.html">Pelikan</a></li>
+        <li hidden><a href="mmlu.html">MMLU</a></li>
+        <li><a href="mk25.html">McFly Benchmark Mk 2.5</a></li>
+        <li hidden data-auth="internal"><a href="macbook.html">MacBook Dashboard</a></li>
+        <li hidden data-auth="internal"><a href="chat.html">McFly Chat System</a></li>
+        <li hidden data-auth="internal"><a href="openclaw.html">Openclaw Betriebsmonitor</a></li>
+        <li data-auth="out"><a href="anmelden.html" aria-current="page">Anmelden</a></li>
+        <li hidden data-auth="in"><button type="button" data-auth="logout">Abmelden</button></li>
+      </ul>
+    </nav>
+    <main id="inhalt" class="stage">
+      <article class="card">
+        <h1>Anmelden</h1>
+        <p class="lead" data-auth-intro>Mit dem Passwort werden die internen Seiten in der Navigation eingeblendet.</p>
+        <form class="auth-form" data-auth-form method="post" action="anmelden.html" onsubmit="return false">
+          <label for="passwort">Passwort
+            <input id="passwort" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" required aria-describedby="auth-error">
+          </label>
+          <p class="auth-error" id="auth-error" role="alert"></p>
+          <button class="auth-submit" type="submit">Anmelden</button>
+        </form>
+        <p class="lead" data-auth-signed-in hidden>Sie sind angemeldet.</p>
+      </article>
+    </main>
+  </div>
+  <script src="auth.js?v=1"></script>
+  <script data-goatcounter="https://superhoschi.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

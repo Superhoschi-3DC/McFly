@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0b1f3a">
   <title>Pelikan — Superhoschi@3DC</title>
   <meta name="description" content="Pelikan, 30 HTML-Dateien. Prompt: animated svg of a pelican riding a bicycle in a single html file.">
-  <link rel="stylesheet" href="site.css?v=18">
+  <link rel="stylesheet" href="site.css?v=20">
 </head>
 <body class="pelikan-page">
   <a class="skip" href="#inhalt">Zum Inhalt</a>
@@ -17,6 +17,11 @@
         <li><a href="pelikan.html" aria-current="page">Pelikan</a></li>
         <li hidden><a href="mmlu.html">MMLU</a></li>
         <li><a href="mk25.html">McFly Benchmark Mk 2.5</a></li>
+        <li hidden data-auth="internal"><a href="macbook.html">MacBook Dashboard</a></li>
+        <li hidden data-auth="internal"><a href="chat.html">McFly Chat System</a></li>
+        <li hidden data-auth="internal"><a href="openclaw.html">Openclaw Betriebsmonitor</a></li>
+        <li data-auth="out"><a href="anmelden.html">Anmelden</a></li>
+        <li hidden data-auth="in"><button type="button" data-auth="logout">Abmelden</button></li>
       </ul>
     </nav>
     <main id="inhalt" class="stage">
@@ -1266,6 +1271,7 @@
   </div>
   <script src="pelikan.js?v=11"></script>
   <script src="site.js?v=11"></script>
+  <script src="auth.js?v=1"></script>
   <script data-goatcounter="https://superhoschi.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
